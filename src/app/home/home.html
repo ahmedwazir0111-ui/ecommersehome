@@ -648,3 +648,118 @@
     </div>
   </div>
 </section>
+
+
+<section class="brands-section container ">
+
+  <div class="brands-header">
+
+    <!-- Title -->
+    <h3 class="title">
+      Our Top <span class="highlight">Brands</span>
+    </h3>
+
+    <!-- View All -->
+    <a routerLink="/brands" class="view-all-btn">
+      View All →
+    </a>
+
+  </div>
+<section class="brands-grid">
+
+  <a class="brand-card" *ngFor="let b of brands" [routerLink]="b.link">
+    <img [src]="b.img" [alt]="b.alt" />
+  </a>
+
+</section>
+
+</section>
+
+
+<section class="news-section container">
+
+  <div class="news-header">
+
+    <h3 class="title">
+      Our <span class="highlight">News</span> &amp; Articles
+    </h3>
+
+    <a routerLink="/blog" class="view-all-btn">
+      View All →
+    </a>
+
+  </div>
+
+  
+<section class="blog-grid">
+
+  <article class="blog-card" *ngFor="let b of blogs">
+
+    <a class="blog-img" [routerLink]="b.link">
+      <img [src]="b.img" [alt]="b.title" />
+    </a>
+
+    <div class="blog-text">
+
+      <ul class="top">
+        <li>
+          <i class="far fa-user"></i>
+          <span>{{ b.author }}</span>
+        </li>
+        <li>
+          <i class="far fa-calendar-alt"></i>
+          <span>{{ b.date }}</span>
+        </li>
+      </ul>
+
+      <a class="title" [routerLink]="b.link">{{ b.title }}</a>
+
+      <ul class="bottom">
+        <li>
+          <a [routerLink]="b.link" class="read-more">
+            Read More <i class="fas fa-long-arrow-right"></i>
+          </a>
+        </li>
+        <li class="comments">
+          <i class="far fa-comment-dots"></i>
+          <span>{{ b.comments }} Comments</span>
+        </li>
+      </ul>
+
+    </div>
+
+  </article>
+
+</section>
+
+</section>
+
+
+<section class="newsletter-section container">
+  <div class="newsletter-box">
+
+    <!-- Text -->
+    <div class="text">
+      <h2>
+        Get Upto <span>70%</span> Off Discount Coupon
+      </h2>
+      <p>By Subscribe Our Newsletter</p>
+
+      <!-- Form -->
+      <form (ngSubmit)="onSubmit()">
+        <input
+          type="email"
+          placeholder="Your email"
+          [(ngModel)]="email"
+          name="email"
+          required
+        />
+
+        <button type="submit" class="btn-subscribe">
+          Subscribe
+        </button>
+      </form>
+    </div>
+
+  </div>
+</section>

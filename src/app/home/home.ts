@@ -10,6 +10,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { SwiperOptions } from 'swiper/types';
 
 import 'swiper/css';
@@ -37,6 +38,16 @@ type ProductColor = {
   active?: boolean;
 };
 
+
+type BlogCard = {
+ id: number;
+  title: string;
+  img: string;
+  author: string;
+  date: string; // "12 Mar 2025"
+  comments: number;
+  link: string;
+}
 type ProductCard = {
   id: number;
   title: string;
@@ -61,6 +72,12 @@ type CarouselProduct = {
   reviews: number;
 };
 
+type BrandItem = {
+  id: number;
+  img: string;
+  alt: string;
+  link: string;
+};
 type BestProduct = {
   id: number;
   title: string;
@@ -72,7 +89,7 @@ type BestProduct = {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, NgIf, NgClass, RouterLink, CurrencyPipe, DecimalPipe],
+  imports: [NgFor, NgIf, NgClass, RouterLink, CurrencyPipe, DecimalPipe, FormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.html',
   styleUrl: './home.scss',
@@ -88,6 +105,17 @@ export class Home implements OnInit, AfterViewInit {
   hours = 0;
   minutes = 43;
   seconds = 31;
+
+  email = '';
+
+  onSubmit() {
+    if (!this.email) return;
+
+    console.log('Subscribed Email:', this.email);
+
+    // هنا بعدين تربطها بـ API
+    this.email = '';
+  }
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     if (
@@ -826,6 +854,64 @@ export class Home implements OnInit, AfterViewInit {
       reviews: 88,
       colors: [],
       link: '/shop-details/26'
+    }
+  ];
+  
+  brands: BrandItem[] = [
+    { id: 1, img: '../assets/img/brand1.png', alt: 'Coca Cola', link: '/shop' },
+    { id: 2, img: '../assets/img/brand2.png', alt: 'FedEx', link: '/shop' },
+    { id: 3, img: '../assets/img/brand9.png', alt: 'Apple', link: '/shop' },
+    { id: 4, img: '../assets/img/brand4.png', alt: 'Apple', link: '/shop' },
+    { id: 5, img: '../assets/img/brand1.png', alt: 'Gong', link: '/shop' },
+    { id: 6, img: '../assets/img/brand2.png', alt: 'Sony', link: '/shop' },
+    { id: 7, img: '../assets/img/brand4.png', alt: 'Treehouse', link: '/shop' },
+    { id: 8, img: '../assets/img/brand9.png', alt: 'Zapier', link: '/shop' },
+    { id: 9, img: '../assets/img/brand1.png', alt: 'IBM', link: '/shop' },
+    { id: 10, img: '../assets/img/brand2.png', alt: 'Huawei', link: '/shop' },
+    { id: 11, img: '../assets/img/brand4.png', alt: 'Walmart', link: '/shop' },
+    { id: 12, img: '../assets/img/brand9.png', alt: 'Coca Cola', link: '/shop' },
+    { id: 13, img: '../assets/img/brand1.png', alt: 'FedEx', link: '/shop' },
+    { id: 14, img: '../assets/img/brand2.png', alt: 'Apple', link: '/shop' },
+    { id: 15, img: '../assets/img/brand4.png', alt: 'Gong', link: '/shop' },
+    { id: 16, img: '../assets/img/brand9.png', alt: 'Sony', link: '/shop' }
+  ];
+
+  blogs: BlogCard[] = [
+    {
+      id: 1,
+      title: 'How to Plop Hair for Bouncy, Beautiful Curls',
+      img: '../assets/img/blog_img_4.png',
+      author: 'Adnan Alvi',
+      date: '12 Mar 2025',
+      comments: 15,
+      link: '/blog-details/1'
+    },
+    {
+      id: 2,
+      title: 'Fast fashion: How clothes are linked to climate change',
+      img: '../assets/img/blog_img_3.png',
+      author: 'Hasib Sing',
+      date: '20 Apr 2025',
+      comments: 42,
+      link: '/blog-details/2'
+    },
+    {
+      id: 3,
+      title: 'Which foundation formula is right for your skin?',
+      img: '../assets/img/blog_img_2.png',
+      author: 'Smith Jhon',
+      date: '07 Mar 2025',
+      comments: 36,
+      link: '/blog-details/3'
+    },
+    {
+      id: 4,
+      title: 'How To Choose The Right Sofa for your home',
+      img: '../assets/img/blog_img_1.png',
+      author: 'Jhon Deo',
+      date: '24 Apr 2025',
+      comments: 15,
+      link: '/blog-details/4'
     }
   ];
 
