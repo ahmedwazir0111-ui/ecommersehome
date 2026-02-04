@@ -32,6 +32,43 @@ type TrendingProduct = {
   colors: string[];
 };
 
+type ProductColor = {
+  hex: string;
+  active?: boolean;
+};
+
+type ProductCard = {
+  id: number;
+  title: string;
+  img: string;
+  price: number;
+  oldPrice?: number;
+  discountPercent?: number; // 20 => -20%
+  rating: number; // 0..5
+  reviews: number;
+  isNew?: boolean;
+  colors: ProductColor[];
+  link: string;
+};
+
+type CarouselProduct = {
+  imgSrc: string;
+  discount: string;
+  isNew: boolean;
+  title: string;
+  price: number;
+  oldPrice: number;
+  reviews: number;
+};
+
+type BestProduct = {
+  id: number;
+  title: string;
+  img: string;
+  price: number;
+  oldPrice?: number;
+  link: string;
+};
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -44,6 +81,7 @@ export class Home implements OnInit, AfterViewInit {
   @ViewChild('swiperEl') private readonly swiperEl?: ElementRef<any>;
   @ViewChild('productSwiperEl') private readonly productSwiperEl?: ElementRef<any>;
   @ViewChild('categorySwiperEl') private readonly categorySwiperEl?: ElementRef<any>;
+  @ViewChild('track') private readonly track?: ElementRef<HTMLElement>;
 
   // Countdown
   days = 364;
@@ -452,7 +490,7 @@ export class Home implements OnInit, AfterViewInit {
     return this.trendingProducts.filter((product) => product.category === this.activeTab);
   }
 
-  products = [
+  carouselProducts: CarouselProduct[] = [
     {
       imgSrc: 'assets/img/product_1.png',
       discount: '75%',
@@ -583,6 +621,239 @@ export class Home implements OnInit, AfterViewInit {
       oldPrice: 93,
     },
   ];
+
+  smallCards: BestProduct[] = [
+    {
+      id: 1,
+      title: "Men's trendy casual shoes",
+      img: '../assets/img/best_sell_pro_img_3.jpg',
+      price: 89,
+      oldPrice: 12,
+      link: '/shop-details/1',
+    },
+    {
+      id: 2,
+      title: "Kid's Western Party Dress",
+      img: '../assets/img/best_sell_pro_img_2.jpg',
+      price: 75,
+      oldPrice: 99,
+      link: '/shop-details/2',
+    },
+    {
+      id: 3,
+      title: "Men's Casual Winter Jacket",
+      img: '../assets/img/best_sell_pro_img_2.jpg',
+      price: 60,
+      oldPrice: 65,
+      link: '/shop-details/3',
+    },
+  ];
+
+  largeCard: BestProduct = {
+    id: 4,
+    title: 'Best Sales Discount And Offers',
+    img: '../assets/img/best_sell_pro_img_4.jpg',
+    price: 89,
+    oldPrice: 12,
+    link: '/shop-details/4',
+  };
+
+  arrivalProducts: ProductCard[] = [
+    {
+      id: 18,
+      title: 'Full Sleeve Hoodie Jacket',
+      img: '../assets/img/product_1.png',
+      price: 88,
+      rating: 5,
+      reviews: 20,
+      isNew: true,
+      colors: [
+        { hex: '#DB4437', active: true },
+        { hex: '#638C34' },
+        { hex: '#1C58F2' },
+        { hex: '#FFA500' }
+      ],
+      link: '/shop-details/18'
+    },
+    {
+      id: 19,
+      title: "Men's premium formal shirt",
+      img: '../assets/img/product_30.png',
+      price: 46,
+      rating: 4,
+      reviews: 17,
+      isNew: true,
+      colors: [
+        { hex: '#DB4437', active: true },
+        { hex: '#638C34' },
+        { hex: '#FFA500' }
+      ],
+      link: '/shop-details/19'
+    },
+    {
+      id: 20,
+      title: 'Cherry fabric western tops',
+      img: '../assets/img/product_3.png',
+      price: 46,
+      rating: 3.5,
+      reviews: 22,
+      isNew: true,
+      colors: [
+        { hex: '#DB4437', active: true },
+        { hex: '#638C34' },
+        { hex: '#1C58F2' },
+        { hex: '#FFA500' }
+      ],
+      link: '/shop-details/20'
+    },
+    {
+      id: 4,
+      title: 'Comfortable Sports Sneakers',
+      img: '../assets/img/product_30.png',
+      price: 75,
+      rating: 5,
+      reviews: 58,
+      isNew: true,
+      colors: [
+        { hex: '#DB4437', active: true },
+        { hex: '#638C34' }
+      ],
+      link: '/shop-details/4'
+    },
+    {
+      id: 23,
+      title: "Kid's dresses for summer",
+      img: '../assets/img/product_8.png',
+      price: 70,
+      rating: 4,
+      reviews: 44,
+      isNew: true,
+      colors: [
+        { hex: '#DB4437', active: true },
+        { hex: '#638C34' },
+        { hex: '#1C58F2' },
+        { hex: '#FFA500' }
+      ],
+      link: '/shop-details/23'
+    }
+  ];
+
+  banner = {
+    img: '../assets/img/favourite_pro_2_banner_img.png',
+    titleLine1: 'This Spring On Apple',
+    titleLine2: 'Up To 50K Off',
+    subtitle: 'Limited Time Offer',
+    link: '/shop-details/1'
+  };
+
+  favoriteProducts: ProductCard[] = [
+    {
+      id: 24,
+      title: 'Women denim jacket',
+      img: '../assets/img/product_3.png',
+      price: 49,
+      rating: 3.5,
+      reviews: 44,
+      colors: [],
+      link: '/shop-details/24'
+    },
+    {
+      id: 23,
+      title: "Kid's Western Party Dress",
+      img: '../assets/img/product_8.png',
+      price: 40,
+      oldPrice: 48,
+      discountPercent: 20,
+      rating: 3.5,
+      reviews: 20,
+      colors: [],
+      link: '/shop-details/23'
+    },
+    {
+      id: 25,
+      title: 'Half Sleeve Jacket For Women',
+      img: '../assets/img/product_8.png',
+      price: 60,
+      rating: 3.5,
+      reviews: 57,
+      colors: [],
+      link: '/shop-details/25'
+    },
+    {
+      id: 26,
+      title: "Kid's Western Party Dress",
+      img: '../assets/img/product_8.png',
+      price: 40,
+      oldPrice: 48,
+      discountPercent: 58,
+      rating: 3.5,
+      reviews: 88,
+      colors: [],
+      link: '/shop-details/26'
+    },
+    {
+      id: 26,
+      title: "Kid's Western Party Dress",
+      img: '../assets/img/product_8.png',
+      price: 40,
+      oldPrice: 48,
+      discountPercent: 58,
+      rating: 3.5,
+      reviews: 88,
+      colors: [],
+      link: '/shop-details/26'
+    },
+    {
+      id: 26,
+      title: "Kid's Western Party Dress",
+      img: '../assets/img/product_8.png',
+      price: 40,
+      oldPrice: 48,
+      discountPercent: 58,
+      rating: 3.5,
+      reviews: 88,
+      colors: [],
+      link: '/shop-details/26'
+    },
+    {
+      id: 26,
+      title: "Kid's Western Party Dress",
+      img: '../assets/img/product_8.png',
+      price: 40,
+      oldPrice: 48,
+      discountPercent: 58,
+      rating: 3.5,
+      reviews: 88,
+      colors: [],
+      link: '/shop-details/26'
+    }
+  ];
+
+  slide(dir: 'prev' | 'next') {
+    if (!isPlatformBrowser(this.platformId)) return;
+    const el = this.track?.nativeElement;
+    if (!el) return;
+    const card = el.querySelector('.slide') as HTMLElement | null;
+    const step = card ? card.offsetWidth + 18 : 320; // gap
+    el.scrollBy({ left: dir === 'next' ? step : -step, behavior: 'smooth' });
+  }
+
+  formatPrice(v: number) {
+    return `$${v.toFixed(2)}`;
+  }
+
+  // لعرض نجوم (full/half/empty)
+  getStars(rating: number) {
+    const full = Math.floor(rating);
+    const half = rating - full >= 0.5;
+    const empty = 5 - full - (half ? 1 : 0);
+
+    return {
+      full: Array(full).fill(0),
+      half,
+      empty: Array(empty).fill(0)
+    };
+  }
 
   async ngAfterViewInit() {
     if (!isPlatformBrowser(this.platformId)) return;

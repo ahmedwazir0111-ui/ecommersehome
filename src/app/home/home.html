@@ -159,7 +159,7 @@
   </button>
 
   <swiper-container #productSwiperEl class="carousel product_carousel" init="false">
-    <swiper-slide *ngFor="let product of products" class="slide">
+    <swiper-slide *ngFor="let product of carouselProducts" class="slide">
       <div class="product_item_2 product_item">
         <div class="product_img">
           <img [src]="product.imgSrc" alt="Product" class="img-fluid w-100" />
@@ -401,5 +401,250 @@
       </div>
     </div>
 
+  </div>
+</section>
+
+
+<section class="container">
+
+<div class="best-selling-header">
+
+  <!-- Title -->
+  <h3 class="title">
+    Our <span class="highlight">Best</span> Selling Products
+  </h3>
+
+  <!-- View All Button -->
+  <a routerLink="/shop" class="view-all-btn">
+    View All →
+  </a>
+
+</div>
+
+
+<div class="best-selling-grid">
+
+  <!-- Left: 3 small cards -->
+  <div class="small-cards">
+    <div class="product-card" *ngFor="let p of smallCards">
+      <img [src]="p.img" [alt]="p.title" />
+      <div class="content">
+        <a class="title" [routerLink]="p.link">{{ p.title }}</a>
+
+        <p class="price">
+          <span class="new">{{ formatPrice(p.price) }}</span>
+          <del *ngIf="p.oldPrice">{{ formatPrice(p.oldPrice) }}</del>
+        </p>
+
+        <a class="buy-btn" [routerLink]="p.link">
+          Buy Now <span class="icon">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: large card -->
+  <div class="large-card">
+    <div class="product-card large">
+      <img [src]="largeCard.img" [alt]="largeCard.title" />
+      <div class="content overlay">
+        <a class="title" [routerLink]="largeCard.link">{{ largeCard.title }}</a>
+
+        <p class="price">
+          <span class="new">{{ formatPrice(largeCard.price) }}</span>
+          <del *ngIf="largeCard.oldPrice">{{ formatPrice(largeCard.oldPrice) }}</del>
+        </p>
+
+        <a class="common-btn" [routerLink]="largeCard.link">
+          Buy Now <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</section>
+
+<section class="container">
+
+
+<section class="arrival-section">
+
+  <div class="arrival-header">
+
+    <!-- Title -->
+    <h3 class="title">
+      Our <span class="highlight">New</span> Arrival Products
+    </h3>
+
+    <!-- View All -->
+    <a routerLink="/shop" class="view-all-btn">
+      View All →
+    </a>
+
+  </div>
+
+</section>
+
+<div class="products-grid">
+
+  <div class="product-card" *ngFor="let p of arrivalProducts">
+    <div class="product-img">
+
+      <img [src]="p.img" [alt]="p.title" />
+
+      <!-- Badge -->
+      <span class="badge-new" *ngIf="p.isNew">New</span>
+
+      <!-- Hover Buttons -->
+  <ul class="btn-list">
+  <li>
+    <button type="button" aria-label="Compare">
+      <i class="fas fa-exchange-alt"></i>
+    </button>
+  </li>
+
+  <li>
+    <button type="button" aria-label="Wishlist">
+      <i class="far fa-heart"></i>
+    </button>
+  </li>
+
+  <li>
+    <button type="button" aria-label="Cart">
+      <i class="fas fa-shopping-cart"></i>
+    </button>
+  </li>
+</ul>
+
+
+
+    </div>
+
+    <div class="product-text">
+      <a class="title" [routerLink]="p.link">{{ p.title }}</a>
+
+      <p class="price">{{ formatPrice(p.price) }}</p>
+
+      <p class="rating">
+        <ng-container *ngIf="getStars(p.rating) as s">
+          <i class="fas fa-star" *ngFor="let _ of s.full"></i>
+          <i class="fas fa-star-half-alt" *ngIf="s.half"></i>
+          <i class="far fa-star" *ngFor="let _ of s.empty"></i>
+        </ng-container>
+
+        <span>({{ p.reviews }} Reviews)</span>
+      </p>
+
+      <ul class="colors">
+        <li
+          *ngFor="let c of p.colors"
+          [class.active]="c.active"
+          [style.background]="c.hex">
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+
+</section>
+
+<section class="favorite-section container">
+  <div class="wrap">
+
+    <!-- Left Banner -->
+    <div class="banner">
+      <img [src]="banner.img" alt="banner" class="banner-img" />
+
+      <div class="banner-text">
+        <h4>
+          {{ banner.titleLine1 }}
+          <span>{{ banner.titleLine2 }}</span>
+        </h4>
+        <p>{{ banner.subtitle }}</p>
+
+        <a class="common-btn" [routerLink]="banner.link">
+          Shop Now <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Content -->
+    <div class="content">
+      <div class="head">
+        <h3 class="title">
+          Our <span class="highlight">Favorite</span> Style Product
+        </h3>
+
+        <div class="arrows">
+          <button type="button" (click)="slide('prev')" aria-label="Previous">←</button>
+          <button type="button" (click)="slide('next')" aria-label="Next">→</button>
+        </div>
+      </div>
+
+      <!-- Slider -->
+      <div #track class="track">
+        <div class="slide" *ngFor="let p of favoriteProducts">
+          <div class="product-card">
+
+            <div class="product-img">
+              <img [src]="p.img" [alt]="p.title" />
+
+              <ul class="badge-list" *ngIf="p.isNew || p.discountPercent">
+                <li class="new" *ngIf="p.isNew">new</li>
+                <li class="discount" *ngIf="p.discountPercent">
+                  <b>-</b> {{ p.discountPercent }}%
+                </li>
+              </ul>
+
+  <ul class="btn-list">
+  <li>
+    <button type="button" aria-label="Compare">
+      <i class="fas fa-exchange-alt"></i>
+    </button>
+  </li>
+
+  <li>
+    <button type="button" aria-label="Wishlist">
+      <i class="far fa-heart"></i>
+    </button>
+  </li>
+
+  <li>
+    <button type="button" aria-label="Cart">
+      <i class="fas fa-shopping-cart"></i>
+    </button>
+  </li>
+</ul>
+
+            </div>
+
+            <div class="product-text">
+              <a class="p-title" [routerLink]="p.link">{{ p.title }}</a>
+
+              <p class="price">
+                <span class="new">{{ formatPrice(p.price) }}</span>
+                <del *ngIf="p.oldPrice">{{ formatPrice(p.oldPrice) }}</del>
+              </p>
+
+              <p class="rating">
+                <ng-container *ngIf="getStars(p.rating) as s">
+                  <i class="fas fa-star" *ngFor="let _ of s.full"></i>
+                  <i class="fas fa-star-half-alt" *ngIf="s.half"></i>
+                  <i class="far fa-star" *ngFor="let _ of s.empty"></i>
+                </ng-container>
+                <span>({{ p.reviews }} Reviews)</span>
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
