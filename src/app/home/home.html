@@ -1,0 +1,405 @@
+<!-- home.html -->
+<section class="banner_2">
+  <div class="container">
+    <div class="row g-4 align-items-stretch">
+      <!-- LEFT: Slider -->
+      <div class="col-xxl-8 col-lg-8 col-md-12">
+        <div class="banner_content">
+          <swiper-container #swiperEl class="banner_2_slider" init="false">
+            <swiper-slide *ngFor="let s of slides">
+              <div class="banner_slide" [style.backgroundImage]="'url(' + s.bg + ')'">
+                <div class="banner_slide__inner">
+                  <h3 class="anim anim--sub">{{ s.subTitle }}</h3>
+                  <h1 class="anim anim--title">{{ s.title }}</h1>
+
+                  <a class="common_btn slide-btn anim anim--btn" [routerLink]="s.link">
+                    <span>Shop Now</span>
+                    <i class="fas fa-long-arrow-right"></i>
+                  </a>
+                </div>
+
+                <img
+                  *ngIf="s.modelImg"
+                  class="banner_slide__model anim anim--model"
+                  [src]="s.modelImg"
+                  alt="model"
+                  loading="lazy"
+                />
+              </div>
+            </swiper-slide>
+          </swiper-container>
+        </div>
+      </div>
+
+      <!-- RIGHT: Add banner -->
+      <div class="col-xxl-4 col-lg-4 col-md-12">
+        <div class="banner_2_add" [style.backgroundImage]="'url(' + rightAd.bg + ')'">
+          <div class="text">
+            <span class="pill anim-right anim-right--pill">{{ rightAd.badge }}</span>
+            <h2 class="anim-right anim-right--title">{{ rightAd.title }}</h2>
+
+            <a class="common_btn slide-btn anim-right anim-right--btn" [routerLink]="rightAd.link">
+              <span>Shop Now</span>
+              <i class="fas fa-long-arrow-right"></i>
+            </a>
+          </div>
+
+          <img
+            *ngIf="rightAd.modelImg"
+            class="banner_2_add__model anim-right anim-right--model"
+            [src]="rightAd.modelImg"
+            alt="model"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features mt_20 container">
+ 
+    <div class="row g-4">
+      <div class="col-xl-3 col-md-6">
+        <div class="features_item feat-yellow">
+          <div class="icon">
+            <img src="assets/images/feature-icon_1.svg" alt="feature" />
+          </div>
+          <div class="text">
+            <h3>Return & refund</h3>
+            <p>Money back guarantee</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6">
+        <div class="features_item feat-blue">
+          <div class="icon">
+            <img src="assets/images/feature-icon_3.svg" alt="feature" />
+          </div>
+          <div class="text">
+            <h3>Quality Support</h3>
+            <p>Always online 24/7</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6">
+        <div class="features_item feat-green">
+          <div class="icon">
+            <img src="assets/images/feature-icon_2.svg" alt="feature" />
+          </div>
+          <div class="text">
+            <h3>Secure Payment</h3>
+            <p>30% off by subscribing</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6">
+        <div class="features_item feat-teal">
+          <div class="icon">
+            <img src="assets/images/feature-icon_4.svg" alt="feature" />
+          </div>
+          <div class="text">
+            <h3>Daily Offers</h3>
+            <p>20% off by subscribing</p>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+</section>
+
+<section class="flash_sell_section mt_50 container">
+  
+    <div
+      class="flash_sell_wrapper d-flex align-items-center justify-content-center justify-content-md-between flex-wrap g-3"
+    >
+      <div class="section_heading_2 mb-4 mb-md-0">
+        <h3><span class="circle-sketch">Flash</span> Sell</h3>
+      </div>
+
+      <div class="d-flex align-items-center flex-wrap justify-content-center gap-4">
+        <div class="simply-countdown-one d-flex gap-2">
+          <div class="count-item">
+            <span class="amount">{{ days }}</span>
+            <span class="word">Days</span>
+          </div>
+          <div class="count-item">
+            <span class="amount">{{ hours }}</span>
+            <span class="word">Hour</span>
+          </div>
+          <div class="count-item">
+            <span class="amount">{{ minutes }}</span>
+            <span class="word">Minutes</span>
+          </div>
+          <div class="count-item">
+            <span class="amount">{{ seconds }}</span>
+            <span class="word">Seconds</span>
+          </div>
+        </div>
+
+        <div class="view_all_btn_area">
+          <a class="view_all_link" href="flash-deals.php" [routerLink]="['/flash-deals']">
+            View All <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+ 
+</section>
+
+<section class="container slider-container">
+
+
+  <!-- arrows -->
+  <button class="slider-arrow prev" type="button" aria-label="Previous">
+           <i class="bi bi-arrow-left"></i>
+  </button>
+
+  <swiper-container #productSwiperEl class="carousel product_carousel" init="false">
+    <swiper-slide *ngFor="let product of products" class="slide">
+      <div class="product_item_2 product_item">
+        <div class="product_img">
+          <img [src]="product.imgSrc" alt="Product" class="img-fluid w-100" />
+          <ul class="discount_list">
+            <li class="discount"><b>-</b> {{ product.discount }}</li>
+            <li *ngIf="product.isNew" class="new">new</li>
+          </ul>
+
+        <ul class="btn_list">
+  <li>
+    <a href="#" title="Compare">
+      <i class="fas fa-random"></i>
+    </a>
+  </li>
+
+  <li>
+    <a href="#" title="Wishlist">
+      <i class="far fa-heart"></i>
+    </a>
+  </li>
+
+  <li>
+    <a href="#" title="Add to Cart">
+      <i class="fas fa-shopping-cart"></i>
+    </a>
+  </li>
+</ul>
+
+        </div>
+
+        <div class="product_text">
+          <a class="title" href="#">{{ product.title }}</a>
+          <p class="price">
+            {{ product.price | currency }} <del>{{ product.oldPrice | currency }}</del>
+          </p>
+
+          <p class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="far fa-star"></i>
+            <span>({{ product.reviews }} reviews)</span>
+          </p>
+
+          <ul class="color">
+            <li class="active" style="background: #638c34"></li>
+            <li style="background: #1c58f2"></li>
+            <li style="background: #ffa500"></li>
+          </ul>
+        </div>
+      </div>
+    </swiper-slide>
+  </swiper-container>
+
+  <button class="slider-arrow next" type="button" aria-label="Next">
+       <i class="bi bi-arrow-right"></i>
+  </button>
+
+</section>
+
+<section class="category category_2 mt_55 container">
+  
+    <div class="category-slider">
+
+      <!-- arrows -->
+      <button class="cat-arrow prev" type="button" aria-label="Previous">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+
+      <swiper-container #categorySwiperEl class="category_2_slider" init="false">
+        <swiper-slide *ngFor="let c of categories" class="cat-slide">
+          <a [routerLink]="c.link" class="category_item">
+            <div class="img">
+              <img [src]="c.img" [alt]="c.title" class="img-fluid w-100" />
+            </div>
+            <h3>{{ c.title }}</h3>
+          </a>
+        </swiper-slide>
+      </swiper-container>
+
+      <button class="cat-arrow next" type="button" aria-label="Next">
+       <i class="bi bi-arrow-right"></i>
+      </button>
+
+    </div>
+ 
+</section>
+
+<section class="container">
+<div class="row align-items-center section-row">
+  <div class="col-xl-6 col-sm-9">
+    <div class="section_heading_2 section_heading">
+      <h3>Our <span class="circle-sketch">Spatial</span> Brand Products</h3>
+    </div>
+  </div>
+
+  <div class="col-xl-6 col-sm-3">
+    <div class="view_all_btn_area text-end">
+      <a class="view_all_btn" href="shop.php">
+        View All <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="container">
+<div class="row pt_15 g-4">
+  <!-- LEFT banner -->
+  <div class="col-xl-4 wow fadeInLeft">
+    <div class="special_product_banner">
+      <div class="text">
+        <h3>Make Your Fashion<br />Look More Changing</h3>
+        <p>Get 50% Off on Selected Clothing Items</p>
+
+        <a class="banner_btn" href="shop-details.php">
+          Shop Now <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="model">
+        <img src="../assets/img/home2_special_banner.jpg" alt="special product" />
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT items -->
+  <div class="col-xl-8">
+    <div class="row g-4">
+      <!-- سيب كروت special_product_item زي ما هي عندك -->
+      <div class="col-md-6 wow fadeInUp" *ngFor="let p of specialProducts">
+        <div class="special_product_item">
+  <span class="discount_badge">Save ${{ p.save }}</span>
+
+  <div class="special_product_img">
+    <img [src]="p.img" alt="product" class="img-fluid w-100" />
+  </div>
+
+  <div class="special_product_text">
+    <a class="title" href="shop-details.php">{{ p.title }}</a>
+
+    <div class="stars">
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star-half-alt"></i>
+      <i class="far fa-star"></i>
+    </div>
+
+    <p class="price">${{ p.price }} <del>${{ p.oldPrice }}</del></p>
+  </div>
+</div>
+
+      </div>
+      <!-- /ngFor -->
+    </div>
+  </div>
+</div>
+
+</section>
+
+<section class="trending_products">
+  <div class="container">
+
+    <div class="trending_header">
+      <h2 class="trending_title">
+        <span class="circle_word">Trending</span> Products
+      </h2>
+
+      <ul class="trending_tabs">
+        <li *ngFor="let t of tabs">
+          <button
+            type="button"
+            (click)="setTab(t)"
+            [class.active]="activeTab === t">
+            {{ t }}
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-3 col-md-4 col-6" *ngFor="let p of filteredTrending">
+        <div class="product_item_2 product_item">
+
+          <div class="product_img">
+            <img [src]="p.imgSrc" alt="Product" class="img-fluid w-100" />
+
+            <ul class="discount_list">
+              <li class="new" *ngIf="p.isNew">New</li>
+              <li class="discount" *ngIf="p.discount"><b>-</b> {{ p.discount }}</li>
+            </ul>
+
+            <ul class="btn_list">
+  <li>
+    <a href="javascript:void(0)">
+      <i class="fas fa-random"></i>
+    </a>
+  </li>
+
+  <li>
+    <a href="javascript:void(0)">
+      <i class="far fa-heart"></i>
+    </a>
+  </li>
+
+  <li>
+    <a href="javascript:void(0)">
+      <i class="fas fa-shopping-cart"></i>
+    </a>
+  </li>
+</ul>
+
+          </div>
+
+          <div class="product_text">
+            <a class="title" href="javascript:void(0)">{{ p.title }}</a>
+
+            <p class="price">
+              ${{ p.price | number:'1.2-2' }}
+              <del *ngIf="p.oldPrice">${{ p.oldPrice | number:'1.2-2' }}</del>
+            </p>
+
+            <p class="rating">
+              <ng-container *ngFor="let i of [1,2,3,4,5]">
+                <i class="fas fa-star" [ngClass]="{ 'far': i > p.rating, 'fas': i <= p.rating }"></i>
+              </ng-container>
+              <span>({{ p.reviews }} Reviews)</span>
+            </p>
+
+            <ul class="color">
+              <li *ngFor="let c of p.colors" [style.background]="c"></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
