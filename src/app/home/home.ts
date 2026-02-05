@@ -9,7 +9,7 @@ import {
   PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SwiperOptions } from 'swiper/types';
 
@@ -117,7 +117,10 @@ export class Home implements OnInit, AfterViewInit {
     this.email = '';
   }
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private router: Router,
+  ) {
     if (
       isPlatformBrowser(this.platformId) &&
       typeof customElements !== 'undefined' &&
@@ -856,6 +859,21 @@ export class Home implements OnInit, AfterViewInit {
       link: '/shop-details/26'
     }
   ];
+  
+  pages = [
+    { label: 'Home', path: '/' },
+    { label: 'Home1', path: '/home1' },
+    { label: 'Home2', path: '/home2' },
+    { label: 'Home3', path: '/home3' },
+    { label: 'Home4', path: '/home4' },
+  ];
+
+  selectedPage = this.pages[0]?.path ?? '/';
+
+  goToSelectedPage() {
+    this.router.navigateByUrl(this.selectedPage);
+  }
+
   
   brands: BrandItem[] = [
     { id: 1, img: '../assets/img/brand1.png', alt: 'Coca Cola', link: '/shop' },

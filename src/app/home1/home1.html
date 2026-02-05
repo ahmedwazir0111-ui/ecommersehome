@@ -1,0 +1,1114 @@
+<!-- Banner Section -->
+<section class="banner-area">
+  <div class="banner-container">
+    <!-- Slide Content -->
+    <div class="banner-content" [class.animate]="animate">
+      <!-- Text Left -->
+      <div class="banner-text">
+        <h5>{{ slides[currentSlide].subtitle }}</h5>
+        <h1>{{ slides[currentSlide].title }}</h1>
+
+        <p>
+          {{ slides[currentSlide].offer }}
+          <span>{{ slides[currentSlide].discount }}</span>
+          {{ slides[currentSlide].text }}
+        </p>
+
+        <a href="#" class="btn-shop">
+          {{ slides[currentSlide].button }} →
+        </a>
+      </div>
+
+      <!-- Image Right -->
+      <div class="banner-image">
+        <img
+          [src]="slides[currentSlide].image"
+          alt="Banner Image"
+          class="float-image"
+        />
+      </div>
+    </div>
+
+    <!-- Dots -->
+    <div class="dots">
+      <span
+        *ngFor="let s of slides; let i = index"
+        (click)="goToSlide(i)"
+        [class.active]="i === currentSlide"
+      ></span>
+    </div>
+  </div>
+</section>
+
+<!-- Category Section -->
+<section class="category-section">
+  <div class="container">
+    <!-- Header -->
+    <div class="row align-items-start">
+      <div class="col-xl-6 col-sm-9">
+        <div class="section_heading mb_40">
+          <p>Shop by Category</p>
+          <h3>Popular Category on the Zenis</h3>
+        </div>
+      </div>
+
+      <div class="col-xl-6 col-sm-3">
+        <div class="view_all_btn_area">
+          <a class="view_all_btn" href="category.php">
+            View All <span aria-hidden="true"><i class="bi bi-arrow-right"></i></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slider -->
+    <div class="category-slider-wrap">
+      <button
+        class="nav-btn prev"
+        type="button"
+        (click)="scrollCategories(-1, true)"
+        aria-label="Previous"
+      >
+        <i class="bi bi-arrow-left"></i>
+      </button>
+
+      <div class="category-slider" #catTrack (scroll)="onCategoryScroll()">
+        <a
+          class="category-item"
+          *ngFor="let c of categories"
+          [href]="c.link"
+          [ngClass]="c.colorClass"
+        >
+          <h3>{{ c.title }}</h3>
+          <p><span>{{ c.items }}</span> Items</p>
+
+          <div class="img">
+            <img [src]="c.image" [alt]="c.title" />
+          </div>
+        </a>
+      </div>
+
+      <button
+        class="nav-btn next"
+        type="button"
+        (click)="scrollCategories(1, true)"
+        aria-label="Next"
+      >
+      <i class="bi bi-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<!-- Flash Sell Header + Countdown -->
+<section class="flash-sell-section">
+  <div class="container">
+    <div class="row mb_40 align-items-center">
+      <div class="col-xl-2 col-md-4 col-lg-3">
+        <div class="section_heading">
+          <p>Today's</p>
+          <h3>Flash Sell</h3>
+        </div>
+      </div>
+
+      <div class="col-xl-6 col-sm-8 col-md-5 col-lg-5">
+        <div class="countdown">
+          <div class="count-box">
+            <span class="num">{{ countdown.days }}</span>
+            <span class="label">days</span>
+          </div>
+
+          <div class="count-box">
+            <span class="num">{{ countdown.hours }}</span>
+            <span class="label">hours</span>
+          </div>
+
+          <div class="count-box">
+            <span class="num">{{ countdown.minutes }}</span>
+            <span class="label">minutes</span>
+          </div>
+
+          <div class="count-box">
+            <span class="num">{{ countdown.seconds }}</span>
+            <span class="label">seconds</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-sm-4 col-md-3 col-lg-4">
+        <div class="view_all_btn_area">
+          <a class="view_all_btn" href="flash-deals.php">
+            View All <span aria-hidden="true"><i class="bi bi-arrow-right"></i></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flash Sell Products Slider -->
+<div class="flash-slider-wrap">
+  <button class="nav-btn prev" type="button" (click)="scrollFlash(-1, true)" aria-label="Previous">
+    <i class="bi bi-arrow-left"></i>
+  </button>
+
+  <div class="flash-slider" #flashTrack (scroll)="onFlashScroll()">
+    <div class="product-card" *ngFor="let p of flashProducts">
+      <div class="product-img">
+        <img [src]="p.image" [alt]="p.title" />
+
+        <div class="badges">
+          <span class="badge new" *ngIf="p.isNew">New</span>
+          <span class="badge discount" *ngIf="p.discount">{{ '-' + p.discount + '%' }}</span>
+        </div>
+      </div>
+
+      <div class="product-text">
+        <a class="title" [href]="p.link">{{ p.title }}</a>
+
+        <p class="price">
+          ${{ p.price }}
+          <del *ngIf="p.oldPrice">${{ p.oldPrice }}</del>
+        </p>
+
+      <div class="rating">
+  <i
+    *ngFor="let star of getStars(p.rating)"
+    class="bi"
+    [ngClass]="star"
+  ></i>
+
+  <span class="reviews">({{ p.reviews }} Reviews)</span>
+</div>
+
+
+        <ul class="color">
+          <li *ngFor="let c of p.colors" [style.background]="c"></li>
+        </ul>
+
+        <button class="cart-btn" type="button" aria-label="Add to cart">
+         <i class="bi bi-basket" aria-hidden="true"></i>
+
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <button class="nav-btn next" type="button" (click)="scrollFlash(1, true)" aria-label="Next">
+  <i class="bi bi-arrow-right"></i>
+  </button>
+</div>
+
+  </div>
+</section>
+
+
+<!-- Large Banner Section -->
+<section class="large-banner-section">
+  <div class="container">
+    <div class="row justify-content-between align-items-center">
+      
+      <!-- Image -->
+      <div class="col-xl-4 col-sm-8 col-md-6">
+        <div class="large_banner_img">
+          <img
+            src="../assets/img/large_banner_img.png"
+            alt="Banner"
+            class="img-fluid"
+          />
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="col-xl-7 col-md-6">
+        <div class="large_banner_text">
+          <h5>70% Off This Week!</h5>
+
+          <h3>
+            Short Sleeve Tunic Tops Casual
+            Swing Dress
+          </h3>
+
+          <ul>
+            <li>
+              <h4>Color</h4>
+              <p>Red , Blue , Green</p>
+            </li>
+            <li>
+              <h4>Size</h4>
+              <p>S , M , L , XL , XXL</p>
+            </li>
+            <li>
+              <h4>Brand</h4>
+              <p>Product Brand</p>
+            </li>
+          </ul>
+
+          <div class="large_banner_text_footer">
+            <h2>$499.00</h2>
+
+            <a href="shop-details.php" class="common_btn">
+              Shop Now
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Trending Products Tabs + Grid -->
+<section class="trending-products">
+  <div class="container">
+
+    <!-- Header + Tabs (زي الصورة) -->
+    <div class="trending-header">
+      <div class="section_heading mb_15">
+        <p>Trending This Month</p>
+        <h3>Trending Products</h3>
+      </div>
+
+      <ul class="trending-tabs">
+        <li *ngFor="let t of trendingTabs; let last = last">
+          <button
+            type="button"
+            class="tab-btn"
+            [class.active]="activeTrendingTab === t"
+            (click)="setTrendingTab(t)"
+          >
+            {{ t }}
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="row g-4 mt-2">
+      <div
+        class="col-6 col-md-4 col-xl-3"
+        *ngFor="let p of filteredTrendingProducts"
+      >
+        <div class="product_item">
+
+          <div class="product_img">
+            <img [src]="p.image" [alt]="p.title" class="img-fluid w-100" />
+
+            <!-- badges -->
+            <ul class="discount_list" *ngIf="p.isNew || p.discountPercent">
+              <li class="new" *ngIf="p.isNew">New</li>
+              <li class="discount" *ngIf="p.discountPercent">
+                <b>-</b> {{ p.discountPercent }}%
+              </li>
+            </ul>
+
+            <!-- (اختياري) أزرار فوق الصورة -->
+          <ul class="btn_list">
+  <li>
+    <a href="#" aria-label="Compare" class="icon-btn">
+      <i class="bi bi-arrow-left-right"></i>
+    </a>
+  </li>
+  <li>
+    <a href="#" aria-label="Love" class="icon-btn">
+      <i class="bi bi-heart"></i>
+    </a>
+  </li>
+</ul>
+
+          </div>
+
+          <div class="product_text">
+            <a class="title" [href]="p.link">{{ p.title }}</a>
+
+            <p class="price">
+              ${{ p.price.toFixed(2) }}
+              <del *ngIf="p.oldPrice">${{ p.oldPrice.toFixed(2) }}</del>
+            </p>
+
+            <!-- rating -->
+            <div class="rating">
+              <i
+                *ngFor="let star of getStars(p.rating)"
+                class="bi"
+                [ngClass]="star"
+              ></i>
+              <span>({{ p.reviews }} Reviews)</span>
+            </div>
+
+            <!-- colors -->
+            <ul class="color">
+              <li
+                *ngFor="let c of p.colors; let i = index"
+                [class.active]="i === 0"
+                [style.background]="c"
+              ></li>
+            </ul>
+
+            <!-- cart -->
+            <a class="cart_btn" href="#" aria-label="Add to cart">
+              <i class="bi bi-basket"></i>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Bundle / Customer Favorite Section -->
+<section class="bundle_product mt_100">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Left Banner -->
+      <div class="col-xl-3 col-lg-3">
+        <div class="bundle_product_banner">
+          <img [src]="bundleBanner.image" alt="bundle" class="img-fluid w-100" />
+
+          <div class="text">
+            <h4>
+              {{ bundleBanner.title }}
+              <span>{{ bundleBanner.highlight }}</span>
+            </h4>
+            <p>{{ bundleBanner.subText }}</p>
+
+            <a class="common_btn" [href]="bundleBanner.link">
+              {{ bundleBanner.button }}
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Products -->
+      <div class="col-xl-9 col-lg-9">
+        <div class="row">
+          <div class="col-xl-8">
+            <div class="section_heading mb_15">
+              <p>{{ bundleHeader.subtitle }}</p>
+              <h3>{{ bundleHeader.title }}</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div
+            class="col-6 col-xl-3 col-md-4"
+            *ngFor="let p of bundleProducts"
+          >
+            <div class="product_item">
+
+              <div class="product_img">
+                <img [src]="p.image" [alt]="p.title" class="img-fluid w-100" />
+
+                <!-- badges -->
+                <ul class="discount_list" *ngIf="p.isNew || p.discountPercent">
+                  <li class="new" *ngIf="p.isNew">New</li>
+                  <li class="discount" *ngIf="p.discountPercent">
+                    <b>-</b> {{ p.discountPercent }}%
+                  </li>
+                </ul>
+
+                <!-- top-right icons -->
+                <ul class="btn_list">
+                <li>
+  <a href="#" aria-label="Compare" class="icon-btn">
+    <i class="bi bi-arrow-left-right"></i>
+  </a>
+</li>
+
+<li>
+  <a href="#" aria-label="Love" class="icon-btn">
+    <i class="bi bi-heart"></i>
+  </a>
+</li>
+
+
+                  <!-- Cart icon (Bootstrap Icons) -->
+                  <li>
+                    <a href="#" aria-label="Cart" class="icon-circle">
+                      <i class="bi bi-basket"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="product_text">
+                <a class="title" [href]="p.link">{{ p.title }}</a>
+
+                <p class="price">
+                  ${{ p.price.toFixed(2) }}
+                  <del *ngIf="p.oldPrice">${{ p.oldPrice.toFixed(2) }}</del>
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<section class="container">
+  <div class="row align-items-start new-arrival-header">
+  <div class="col-xl-6 col-sm-8">
+    <div class="section_heading mb_15">
+      <p>New This Month</p>
+      <h3>New Arrival</h3>
+    </div>
+  </div>
+
+  <div class="col-xl-6 col-sm-4">
+    <div class="view_all_btn_area">
+      <a class="view_all_btn" href="#">
+        View All <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<div class="row g-4 mt-2">
+      <div
+        class="col-6 col-md-4 col-xl-3"
+        *ngFor="let p of filteredTrendingProducts"
+      >
+        <div class="product_item">
+
+          <div class="product_img">
+            <img [src]="p.image" [alt]="p.title" class="img-fluid w-100" />
+
+            <!-- badges -->
+            <ul class="discount_list" *ngIf="p.isNew || p.discountPercent">
+              <li class="new" *ngIf="p.isNew">New</li>
+              <li class="discount" *ngIf="p.discountPercent">
+                <b>-</b> {{ p.discountPercent }}%
+              </li>
+            </ul>
+
+            <!-- (اختياري) أزرار فوق الصورة -->
+          <ul class="btn_list">
+  <li>
+    <a href="#" aria-label="Compare" class="icon-btn">
+      <i class="bi bi-arrow-left-right"></i>
+    </a>
+  </li>
+  <li>
+    <a href="#" aria-label="Love" class="icon-btn">
+      <i class="bi bi-heart"></i>
+    </a>
+  </li>
+</ul>
+
+          </div>
+
+          <div class="product_text">
+            <a class="title" [href]="p.link">{{ p.title }}</a>
+
+            <p class="price">
+              ${{ p.price.toFixed(2) }}
+              <del *ngIf="p.oldPrice">${{ p.oldPrice.toFixed(2) }}</del>
+            </p>
+
+            <!-- rating -->
+            <div class="rating">
+              <i
+                *ngFor="let star of getStars(p.rating)"
+                class="bi"
+                [ngClass]="star"
+              ></i>
+              <span>({{ p.reviews }} Reviews)</span>
+            </div>
+
+            <!-- colors -->
+            <ul class="color">
+              <li
+                *ngFor="let c of p.colors; let i = index"
+                [class.active]="i === 0"
+                [style.background]="c"
+              ></li>
+            </ul>
+
+            <!-- cart -->
+            <a class="cart_btn" href="#" aria-label="Add to cart">
+              <i class="bi bi-basket"></i>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+ 
+
+
+</section>
+
+
+
+<section class="container">
+
+<div class="row justify-content-center text-center">
+  <div class="col-xl-6 col-lg-8 col-md-10">
+    <div class="section_heading mb_15">
+      <p class="section_subtitle">Special Products Of This Month</p>
+      <h3>Our Spatial Brand Products</h3>
+    </div>
+  </div>
+</div>
+
+
+<div class="row g-4 align-items-stretch special-products">
+
+  <!-- LEFT -->
+  <div class="col-xl-4 col-lg-4">
+    <div class="row g-4">
+      <!-- item -->
+      <div class="col-12 col-md-6 col-lg-12">
+        <div class="special_product_item">
+          <div class="special_product_img">
+            <img src="../assets/img/category_img_1.png" alt="product" />
+            <span class="discount">Save $20</span>
+          </div>
+
+          <div class="special_product_text">
+            <a class="title" href="#">Men’s trendy formal shoes</a>
+
+            <div class="stars">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-half"></i>
+              <i class="bi bi-star"></i>
+            </div>
+
+            <p class="price">$10.00 <del>$12.00</del></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-12">
+        <div class="special_product_item">
+          <div class="special_product_img">
+            <img src="../assets/img/category_img_1.png" alt="product" />
+            <span class="discount">Save $20</span>
+          </div>
+
+          <div class="special_product_text">
+            <a class="title" href="#">Men’s trendy formal shoes</a>
+
+            <div class="stars">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-half"></i>
+              <i class="bi bi-star"></i>
+            </div>
+
+            <p class="price">$10.00 <del>$12.00</del></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-12">
+        <div class="special_product_item">
+          <div class="special_product_img">
+            <img src="../assets/img/category_img_1.png" alt="product" />
+            <span class="discount">Save $20</span>
+          </div>
+
+          <div class="special_product_text">
+            <a class="title" href="#">Men’s trendy formal shoes</a>
+
+            <div class="stars">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-half"></i>
+              <i class="bi bi-star"></i>
+            </div>
+
+            <p class="price">$10.00 <del>$12.00</del></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-12">
+        <div class="special_product_item">
+          <div class="special_product_img">
+            <img src="../assets/img/category_img_1.png" alt="product" />
+            <span class="discount">Save $20</span>
+          </div>
+
+          <div class="special_product_text">
+            <a class="title" href="#">Men’s trendy formal shoes</a>
+
+            <div class="stars">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-half"></i>
+              <i class="bi bi-star"></i>
+            </div>
+
+            <p class="price">$10.00 <del>$12.00</del></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- كرر نفس item 3 مرات -->
+    </div>
+  </div>
+
+  <!-- CENTER -->
+  <div class="col-xl-4 col-lg-4">
+    <div class="special_product_banner h-100">
+      <div class="text">
+        <h3>Make Your Fashion Look More Changing</h3>
+        <p>Get 50% Off on Selected Clothing Items</p>
+        <a class="btn shop_btn" href="#">
+          Shop Now <i class="bi bi-arrow-up-right"></i>
+        </a>
+      </div>
+
+      <div class="banner_img">
+        <img src="../assets/img/special_pro_banner_img_4.jpg" alt="special" />
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="col-xl-4 col-lg-4">
+    <div class="row g-4">
+      <!-- item -->
+      <div class="col-12 col-md-6 col-lg-12">
+        <div class="special_product_item">
+          <div class="special_product_img">
+            <img src="../assets/img/category_img_1.png" alt="product" />
+          </div>
+
+          <div class="special_product_text">
+            <a class="title" href="#">Men’s premium formal pant</a>
+
+            <div class="stars">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+
+            <p class="price">$29.00</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-12">
+        <div class="special_product_item">
+          <div class="special_product_img">
+            <img src="../assets/img/category_img_1.png" alt="product" />
+          </div>
+
+          <div class="special_product_text">
+            <a class="title" href="#">Men’s premium formal pant</a>
+
+            <div class="stars">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+
+            <p class="price">$29.00</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-12">
+        <div class="special_product_item">
+          <div class="special_product_img">
+            <img src="../assets/img/category_img_2.png" alt="product" />
+          </div>
+
+          <div class="special_product_text">
+            <a class="title" href="#">Men’s premium formal pant</a>
+
+            <div class="stars">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+
+            <p class="price">$29.00</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-12">
+        <div class="special_product_item">
+          <div class="special_product_img">
+            <img src="../assets/img/category_img_1.png" alt="product" />
+          </div>
+
+          <div class="special_product_text">
+            <a class="title" href="#">Men’s premium formal pant</a>
+
+            <div class="stars">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+
+            <p class="price">$29.00</p>
+          </div>
+        </div>
+      </div>
+
+   
+    </div>
+  </div>
+
+</div>
+
+
+</section>
+
+
+<section class="container">
+
+<div class="row align-items-center best-selling-header">
+  <div class="col-xl-6 col-sm-8">
+    <div class="section_heading mb_15">
+      <p class="section_subtitle">Best Selling Of This Month</p>
+      <h3 class="section_title">Best Selling Products</h3>
+    </div>
+  </div>
+
+  <div class="col-xl-6 col-sm-4 text-sm-end">
+    <div class="view_all_btn_area">
+      <a class="view_all_btn" href="#">
+        View All <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+  <div class="row g-4 mt-2">
+      <div
+        class="col-6 col-md-4 col-xl-3"
+        *ngFor="let p of filteredTrendingProducts"
+      >
+        <div class="product_item">
+
+          <div class="product_img">
+            <img [src]="p.image" [alt]="p.title" class="img-fluid w-100" />
+
+            <!-- badges -->
+            <ul class="discount_list" *ngIf="p.isNew || p.discountPercent">
+              <li class="new" *ngIf="p.isNew">New</li>
+              <li class="discount" *ngIf="p.discountPercent">
+                <b>-</b> {{ p.discountPercent }}%
+              </li>
+            </ul>
+
+            <!-- (اختياري) أزرار فوق الصورة -->
+          <ul class="btn_list">
+  <li>
+    <a href="#" aria-label="Compare" class="icon-btn">
+      <i class="bi bi-arrow-left-right"></i>
+    </a>
+  </li>
+  <li>
+    <a href="#" aria-label="Love" class="icon-btn">
+      <i class="bi bi-heart"></i>
+    </a>
+  </li>
+</ul>
+
+          </div>
+
+          <div class="product_text">
+            <a class="title" [href]="p.link">{{ p.title }}</a>
+
+            <p class="price">
+              ${{ p.price.toFixed(2) }}
+              <del *ngIf="p.oldPrice">${{ p.oldPrice.toFixed(2) }}</del>
+            </p>
+
+            <!-- rating -->
+            <div class="rating">
+              <i
+                *ngFor="let star of getStars(p.rating)"
+                class="bi"
+                [ngClass]="star"
+              ></i>
+              <span>({{ p.reviews }} Reviews)</span>
+            </div>
+
+            <!-- colors -->
+            <ul class="color">
+              <li
+                *ngFor="let c of p.colors; let i = index"
+                [class.active]="i === 0"
+                [style.background]="c"
+              ></li>
+            </ul>
+
+            <!-- cart -->
+            <a class="cart_btn" href="#" aria-label="Add to cart">
+              <i class="bi bi-basket"></i>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="brand mt_100 container">
+  <div class="brand-slider">
+    <div class="brand-track">
+      <div class="brand-item" *ngFor="let b of brands">
+        <img [src]="b" alt="brand">
+      </div>
+
+      <!-- نسخة تانية علشان الحركة تبقى لا نهائية -->
+      <div class="brand-item" *ngFor="let b of brands">
+        <img [src]="b" alt="brand">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="multi_product mt_70">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Column 1 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="multi_box">
+          <h3 class="multi_title">Featured Products</h3>
+
+          <div class="multi_product_item" *ngFor="let p of featuredProducts">
+            <div class="img">
+              <img [src]="p.image" [alt]="p.title" class="img-fluid" />
+            </div>
+
+            <div class="text">
+              <a class="title" [href]="p.link">{{ p.title }}</a>
+
+              <div class="rating">
+                <i class="bi bi-star-fill" *ngFor="let _ of [].constructor(p.starsFull)"></i>
+                <i class="bi bi-star-half" *ngIf="p.hasHalf"></i>
+                <i class="bi bi-star" *ngFor="let _ of [].constructor(p.starsEmpty)"></i>
+                <span>({{ p.reviews }} Reviews)</span>
+              </div>
+
+              <div class="price">
+                ${{ p.price.toFixed(2) }}
+                <del *ngIf="p.oldPrice">${{ p.oldPrice.toFixed(2) }}</del>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Column 2 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="multi_box">
+          <h3 class="multi_title">Weekly Best Products</h3>
+
+          <div class="multi_product_item" *ngFor="let p of weeklyProducts">
+            <div class="img">
+              <img [src]="p.image" [alt]="p.title" class="img-fluid" />
+            </div>
+
+            <div class="text">
+              <a class="title" [href]="p.link">{{ p.title }}</a>
+
+              <div class="rating">
+                <i class="bi bi-star-fill" *ngFor="let _ of [].constructor(p.starsFull)"></i>
+                <i class="bi bi-star-half" *ngIf="p.hasHalf"></i>
+                <i class="bi bi-star" *ngFor="let _ of [].constructor(p.starsEmpty)"></i>
+                <span>({{ p.reviews }} Reviews)</span>
+              </div>
+
+              <div class="price">
+                ${{ p.price.toFixed(2) }}
+                <del *ngIf="p.oldPrice">${{ p.oldPrice.toFixed(2) }}</del>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Column 3 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="multi_box">
+          <h3 class="multi_title">Top Rated Products</h3>
+
+          <div class="multi_product_item" *ngFor="let p of topRatedProducts">
+            <div class="img">
+              <img [src]="p.image" [alt]="p.title" class="img-fluid" />
+            </div>
+
+            <div class="text">
+              <a class="title" [href]="p.link">{{ p.title }}</a>
+
+              <div class="rating">
+                <i class="bi bi-star-fill" *ngFor="let _ of [].constructor(p.starsFull)"></i>
+                <i class="bi bi-star-half" *ngIf="p.hasHalf"></i>
+                <i class="bi bi-star" *ngFor="let _ of [].constructor(p.starsEmpty)"></i>
+                <span>({{ p.reviews }} Reviews)</span>
+              </div>
+
+              <div class="price">
+                ${{ p.price.toFixed(2) }}
+                <del *ngIf="p.oldPrice">${{ p.oldPrice.toFixed(2) }}</del>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="container">
+<div class="row align-items-center mb_30">
+  <div class="col-xl-6 col-sm-8">
+    <div class="section_heading">
+      <p class="sub_title">Our Blog Post</p>
+      <h3 class="main_title">Latest News &amp; Articles</h3>
+    </div>
+  </div>
+
+  <div class="col-xl-6 col-sm-4">
+    <div class="view_all_btn_area">
+      <a class="view_all_btn" href="#">
+        View All <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+
+
+</section>
+
+
+<section class="container">
+  <div class="row g-4">
+  <div class="col-lg-4 col-md-6">
+    <div class="blog_item">
+      <a href="blog-details.php" class="blog_img">
+        <img src="../assets/img/blog_img_3.png" alt="blog" class="img-fluid w-100" />
+      </a>
+
+      <div class="blog_text">
+        <ul class="top">
+          <li><i class="bi bi-person"></i> Admin</li>
+          <li><i class="bi bi-calendar3"></i> 03 Mar 2025</li>
+        </ul>
+
+        <a class="title" href="blog-details.php">
+          How to Plop Hair for Bouncy, Beautiful Curls
+        </a>
+
+        <ul class="bottom">
+          <li>
+            <a href="blog-details.php" class="read_more">
+              Read More <i class="bi bi-arrow-right"></i>
+            </a>
+          </li>
+          <li class="comments">
+            <i class="bi bi-chat-dots"></i> 15 Comments
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-md-6">
+    <div class="blog_item">
+      <a href="blog-details.php" class="blog_img">
+        <img src="../assets/img/blog_img_2.png" alt="blog" class="img-fluid w-100" />
+      </a>
+
+      <div class="blog_text">
+        <ul class="top">
+          <li><i class="bi bi-person"></i> Admin</li>
+          <li><i class="bi bi-calendar3"></i> 03 Mar 2025</li>
+        </ul>
+
+        <a class="title" href="blog-details.php">
+          How to Plop Hair for Bouncy, Beautiful Curls
+        </a>
+
+        <ul class="bottom">
+          <li>
+            <a href="blog-details.php" class="read_more">
+              Read More <i class="bi bi-arrow-right"></i>
+            </a>
+          </li>
+          <li class="comments">
+            <i class="bi bi-chat-dots"></i> 15 Comments
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-md-6">
+    <div class="blog_item">
+      <a href="blog-details.php" class="blog_img">
+        <img src="../assets/img/blog_img_1.png" alt="blog" class="img-fluid w-100" />
+      </a>
+
+      <div class="blog_text">
+        <ul class="top">
+          <li><i class="bi bi-person"></i> Admin</li>
+          <li><i class="bi bi-calendar3"></i> 03 Mar 2025</li>
+        </ul>
+
+        <a class="title" href="blog-details.php">
+          How to Plop Hair for Bouncy, Beautiful Curls
+        </a>
+
+        <ul class="bottom">
+          <li>
+            <a href="blog-details.php" class="read_more">
+              Read More <i class="bi bi-arrow-right"></i>
+            </a>
+          </li>
+          <li class="comments">
+            <i class="bi bi-chat-dots"></i> 15 Comments
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- كرر نفس البلوك لباقي الكروت -->
+</div>
+
+</section>

@@ -1,1 +1,30 @@
-<app-home></app-home>
+<nav class="navbar bg-white border-bottom sticky-top">
+  <div class="container py-2 d-flex align-items-center justify-content-between">
+    <a class="navbar-brand m-0 fw-bold" routerLink="/">myProject</a>
+
+    <div class="position-relative" (click)="$event.stopPropagation()">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        (click)="toggleHomeMenu($event)"
+        [attr.aria-expanded]="homeMenuOpen"
+        aria-haspopup="true"
+      >
+        Home
+      </button>
+
+      <div class="dropdown-menu show" *ngIf="homeMenuOpen">
+        <a
+          *ngFor="let p of homePages"
+          class="dropdown-item"
+          [routerLink]="p.path"
+          (click)="closeHomeMenu()"
+        >
+          {{ p.label }}
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
