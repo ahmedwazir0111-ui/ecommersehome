@@ -1,0 +1,56 @@
+<div class="product_item">
+  <div class="product_img">
+    <img [src]="product().image" [alt]="product().title" class="img-fluid w-100" />
+
+    <!-- badges -->
+    <ul class="discount_list" *ngIf="product().isNew || product().discountPercent">
+      <li class="new" *ngIf="product().isNew">New</li>
+      <li class="discount" *ngIf="product().discountPercent">
+        <b>-</b> {{ product().discountPercent }}%
+      </li>
+    </ul>
+
+    <!-- icons -->
+    <ul class="btn_list" *ngIf="showIcons()">
+      <li>
+        <a href="#" aria-label="Compare" class="icon-btn">
+          <i class="bi bi-arrow-left-right"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#" aria-label="Love" class="icon-btn">
+          <i class="bi bi-heart"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="product_text">
+    <a class="title" [href]="product().link">{{ product().title }}</a>
+
+    <p class="price">
+      ${{ product().price.toFixed(2) }}
+      <del *ngIf="product().oldPrice != null">${{ product().oldPrice!.toFixed(2) }}</del>
+    </p>
+
+    <!-- rating -->
+    <div class="rating" *ngIf="showRating()">
+      <i *ngFor="let s of stars()" class="bi" [ngClass]="s"></i>
+      <span *ngIf="product().reviews != null">({{ product().reviews }} Reviews)</span>
+    </div>
+
+    <!-- colors -->
+    <ul class="color" *ngIf="showColors() && product().colors?.length">
+      <li
+        *ngFor="let c of product().colors; let i = index"
+        [class.active]="i === 0"
+        [style.background]="c"
+      ></li>
+    </ul>
+
+    <!-- cart -->
+    <a class="cart_btn" *ngIf="showCart()" href="#" aria-label="Add to cart">
+      <i class="bi bi-basket"></i>
+    </a>
+  </div>
+</div>

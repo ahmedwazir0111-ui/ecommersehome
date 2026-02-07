@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { Home } from './home/home';
-import { Home1 } from './home1/home1';
+import { Home1 } from './pages/home1/home1';
 import { Home2 } from './home2/home2';
 import { Home3 } from './home3/home3';
 import { Home4 } from './home4/home4';
