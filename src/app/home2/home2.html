@@ -1,1 +1,645 @@
-<p>home2 works!</p>
+<section class="container">
+  <section class="grocery_banner_full" [style.background-image]="'url(' + bannerBg + ')'">
+    <div class="container">
+      <div class="banner_content">
+        <h3>Select Only Grocery Products</h3>
+
+        <h1>
+          Get 30% Discount Of <br />
+          Your First Shopping
+        </h1>
+
+        <p>
+          Contrary to popular belief, Lorem Ipsum is not simply random text piece of classical Latin literature.
+        </p>
+
+        <a class="banner_btn" routerLink="/shop-details">
+          Shop Now
+          <i class="bi bi-arrow-up-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="categories pt_100">
+    <div class="container">
+      <div class="slider_padding">
+        <button class="nav_btn prev" type="button" (click)="catPrev()" aria-label="Previous">
+          <i class="bi bi-arrow-left"></i>
+        </button>
+
+        <div class="category_track" #catTrack (mouseenter)="stopAutoSlide()" (mouseleave)="startAutoSlide()">
+          <a
+            *ngFor="let c of categorySlides"
+            class="category_item"
+            [ngClass]="c.colorClass"
+            [routerLink]="c.link || '/shop'"
+          >
+            <div class="icon">
+              <img [src]="c.img" [alt]="c.title" />
+            </div>
+            <h4>{{ c.title }}</h4>
+          </a>
+        </div>
+
+        <button class="nav_btn next" type="button" (click)="catNext()" aria-label="Next">
+          <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="add_banner pt_75">
+    <div class="container">
+      <div class="row g-3">
+        <div class="col-lg-6" *ngFor="let b of adBanners; trackBy: trackByIndex">
+          <div class="add_banner_item" [style.background-image]="'url(' + b.bg + ')'">
+            <div class="add_banner_item_text">
+              <h4>{{ b.title }}</h4>
+
+              <h2>
+                {{ b.heading }}
+              </h2>
+
+              <a class="common_btn" [ngClass]="{ bg_blck: b.btnVariant === 'black' }" [routerLink]="b.link">
+                {{ b.btnText }}
+                <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="products_head">
+    <div class="container">
+      <div class="row align-items-center g-3">
+        <div class="col-xl-5">
+          <div class="section_heading mb_15">
+            <h5>Our Products</h5>
+            <h3>Our Fresh Products</h3>
+          </div>
+        </div>
+
+        <div class="col-xl-7">
+          <div class="tabs_wrap">
+            <button
+              type="button"
+              class="tab_btn"
+              *ngFor="let t of productTabs; let last = last"
+              [class.active]="activeTab === t.key"
+              (click)="setActiveTab(t.key)"
+            >
+              {{ t.label }}
+              <span class="dot" *ngIf="!last"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="products_grid_sec">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6" *ngFor="let p of filteredProducts; trackBy: trackByProdId">
+          <div class="grocery_product">
+            <div class="grocery_product_img">
+              <img [src]="p.img" [alt]="p.title" class="img-fluid w-100" />
+
+              <ul class="actions">
+                <li>
+                  <button type="button" (click)="compare(p)" aria-label="Compare">
+                    <i class="bi bi-arrow-repeat" aria-hidden="true"></i>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" (click)="toggleWish(p)" aria-label="Wishlist">
+                    <i class="bi bi-heart" aria-hidden="true"></i>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div class="grocery_product_text">
+              <a class="title" [routerLink]="p.link || '/shop-details'">{{ p.title }}</a>
+
+              <p class="price">
+                ${{ p.price | number:'1.2-2' }}
+                <del *ngIf="p.oldPrice">${{ p.oldPrice | number:'1.2-2' }}</del>
+              </p>
+
+              <button class="cart_btn" type="button" (click)="addToCart2(p)">
+                <i class="bi bi-basket" aria-hidden="true"></i>
+                Add To Cart
+                <span></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="grocery_countdown mt_100 pt_100 pb_95" [style.background-image]="'url(' + countdownBg + ')'">
+    <div class="container">
+      <div class="row">
+        <div class="col-xxl-5 col-xl-6 col-lg-6 col-md-9">
+          <div class="grocery_countdown_text">
+            <div class="section_heading">
+              <h5>Sales on Weekly Offers</h5>
+              <h3>Our special products deal of the day</h3>
+            </div>
+
+            <p>
+              There are many variations of passages of Lorem Ipsum available but majority have suffered alteration in
+              some form.
+            </p>
+
+            <div class="simply-countdown simply-countdown-one">
+              <div class="simply-section">
+                <div>
+                  <span class="simply-amount">{{ countdown.days }}</span>
+                  <span class="simply-word">Days</span>
+                </div>
+              </div>
+
+              <div class="simply-section">
+                <div>
+                  <span class="simply-amount">{{ countdown.hours }}</span>
+                  <span class="simply-word">Hours</span>
+                </div>
+              </div>
+
+              <div class="simply-section">
+                <div>
+                  <span class="simply-amount">{{ countdown.minutes }}</span>
+                  <span class="simply-word">Minutes</span>
+                </div>
+              </div>
+
+              <div class="simply-section">
+                <div>
+                  <span class="simply-amount">{{ countdown.seconds }}</span>
+                  <span class="simply-word">Seconds</span>
+                </div>
+              </div>
+            </div>
+
+            <a class="common_btn" routerLink="/shop-details">
+              Shop Now
+              <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+              <span></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="best_sell_section mt_100">
+    <div class="container">
+      <div class="row align-items-center g-3 mb-3">
+        <div class="col-xl-6">
+          <div class="section_heading mb_15">
+            <h5>Best Sells Products</h5>
+            <h3>Organic Bestseller Product</h3>
+          </div>
+        </div>
+
+        <div class="col-xl-6">
+          <div class="best_nav">
+            <button type="button" class="nav_circle" (click)="bestPrev()">
+              <i class="bi bi-arrow-left"></i>
+            </button>
+            <button type="button" class="nav_circle" (click)="bestNext()">
+              <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-xl-3 col-md-4 col-lg-4">
+          <div class="special_product_banner">
+            <img src="../assets/img/grocery_best_sell_banner.jpg" alt="special product" class="img-fluid w-100" />
+            <div class="text">
+              <h5>Organic Food</h5>
+              <h3>Fresh Foods Up To 45% Off</h3>
+              <a class="common_btn" routerLink="/shop-details">
+                Shop Now
+                <i class="bi bi-arrow-up-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-9 col-md-8 col-lg-8">
+          <div class="best_sell_track" #bestSellTrack>
+            <div class="best_card_item" *ngFor="let p of bestProducts">
+              <div class="grocery_product">
+                <div class="grocery_product_img">
+                  <img [src]="p.img" [alt]="p.title" />
+                </div>
+
+                <div class="grocery_product_text">
+                  <a class="title">{{ p.title }}</a>
+                  <p>
+                    ${{ p.price }}
+                    <del *ngIf="p.oldPrice">${{ p.oldPrice }}</del>
+                  </p>
+                  <button class="cart_btn">
+                    <i class="bi bi-basket"></i>
+                    Add To Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ================= PARTNERS ================= -->
+<section class="partners_section mt_100">
+  <div class="container">
+
+    <!-- Heading -->
+    <div class="row">
+      <div class="col-xl-5 m-auto text-center">
+        <div class="section_heading mb_35">
+          <h5>Our Partners</h5>
+          <h3>Our Organic Farm Partners</h3>
+        </div>
+      </div>
+    </div>
+
+ <section>
+
+<section class="ghrocery_brand_item_area mt_100">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="brand_marquee">
+          <div class="marquee_track">
+            <ul class="marquee_list">
+              <li *ngFor="let b of brands">
+                <a [routerLink]="b.link || '/shop'">
+                  <img [src]="b.logo" [alt]="b.name" class="img-fluid w-100" />
+                </a>
+              </li>
+            </ul>
+
+            <ul class="marquee_list" aria-hidden="true">
+              <li *ngFor="let b of brands">
+                <a [routerLink]="b.link || '/shop'" tabindex="-1">
+                  <img [src]="b.logo" [alt]="b.name" class="img-fluid w-100" />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SPECIAL PRODUCTS ================= -->
+<section class="special_products_section mt_100">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-xl-5 m-auto text-center">
+        <div class="section_heading mb_25">
+          <h5>Special Products</h5>
+          <h3>Our Special Products</h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ================= SPECIAL PRODUCTS CONTENT ================= -->
+<section class="special_products_content mt_40">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- LEFT BANNER -->
+      <div class="col-xxl-4 col-xl-3 col-lg-3 d-none d-lg-block">
+        <div class="special_pro_banner" [style.background-image]="'url(' + specialBanner.bg + ')'">
+          <div class="text">
+            <h5>{{ specialBanner.title }}</h5>
+            <h3>{{ specialBanner.heading }}</h3>
+            <p>{{ specialBanner.desc }}</p>
+
+            <a class="common_btn black_btn" [routerLink]="specialBanner.link">
+              {{ specialBanner.btnText }}
+              <i class="bi bi-arrow-up-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT LIST -->
+      <div class="col-xxl-8 col-xl-9 col-lg-9">
+        <div class="row g-3">
+          <div class="col-md-6" *ngFor="let sp of specialProducts; trackBy: trackByIndex">
+            <div class="special_product_item">
+
+              <div class="special_product_img">
+                <img [src]="sp.img" [alt]="sp.title" class="img-fluid w-100" />
+                <span class="discount" *ngIf="sp.save">Save {{ sp.save }}%</span>
+              </div>
+
+              <div class="special_product_text">
+                <a class="title" [routerLink]="sp.link || '/shop-details'">{{ sp.title }}</a>
+
+                <!-- Stars (ثابتة زي التمبليت) -->
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-half"></i>
+                  <i class="bi bi-star"></i>
+                </div>
+
+                <p class="price">
+                  ${{ sp.price | number:'1.2-2' }}
+                  <del *ngIf="sp.oldPrice">${{ sp.oldPrice | number:'1.2-2' }}</del>
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= FARMING ================= -->
+<section
+  class="farming mt_100 pt_75 pb_100"
+  [style.background-image]="'url(' + farmingBg + ')'"
+>
+  <div class="container">
+    <div class="row align-items-center g-4">
+
+      <!-- LEFT TEXT -->
+      <div class="col-lg-5 col-md-10">
+        <div class="farming_text">
+          <div class="section_heading">
+            <h5>{{ farming.title }}</h5>
+            <h3>{{ farming.heading }}</h3>
+          </div>
+
+          <p>{{ farming.desc }}</p>
+
+          <a class="common_btn" [routerLink]="farming.link">
+            {{ farming.btnText }}
+            <i class="bi bi-arrow-up-right"></i>
+            <span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT IMAGES -->
+      <div class="col-lg-7">
+        <div class="row g-4">
+          <div class="col-xl-6 col-sm-6" *ngFor="let f of farmingImages; trackBy: trackByIndex">
+            <div class="farming_img">
+              <img [src]="f.img" alt="farming" class="img-fluid w-100" />
+
+              <div class="overlay">
+                <button type="button" class="play_btn" (click)="openVideo(farming.videoUrl)">
+                  <i class="bi bi-play-fill"></i>
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= DOWNLOAD APP ================= -->
+<section class="download mt_100">
+  <div class="container">
+    <div class="row align-items-center g-4">
+
+      <!-- LEFT IMAGE -->
+      <div class="col-xl-5 col-md-5 col-lg-5">
+        <div class="download_img">
+          <img
+            [src]="downloadSection.image"
+            alt="download"
+            class="img-fluid w-100"
+          />
+        </div>
+      </div>
+
+      <!-- RIGHT TEXT -->
+      <div class="col-xl-5 col-md-7 col-lg-7 m-auto">
+        <div class="download_text">
+
+          <div class="section_heading">
+            <h5>{{ downloadSection.title }}</h5>
+            <h3>{{ downloadSection.heading }}</h3>
+          </div>
+
+          <p>{{ downloadSection.desc }}</p>
+
+          <div class="download_buttons">
+
+            <a
+              class="store_btn apple"
+              [href]="downloadSection.appleLink"
+              target="_blank"
+            >
+              <i class="bi bi-apple"></i>
+              Apple Store
+            </a>
+
+            <a
+              class="store_btn play"
+              [href]="downloadSection.playLink"
+              target="_blank"
+            >
+              <i class="bi bi-google-play"></i>
+              Play Store
+            </a>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section
+  class="testimonial mt_100 pt_95 pb_135"
+  [style.background-image]="'url(assets/img/grocery_testimonial_bg.jpg)'"
+>
+  <div class="container">
+
+    <div class="row">
+      <div class="col-xl-5 m-auto text-center">
+        <div class="section_heading mb_40">
+          <h5>Testimonials</h5>
+          <h3>What Our Customer Say</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slider -->
+    <div class="testi_wrapper">
+
+      <button class="nav_circle prev" type="button" (click)="testiPrev()">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+
+      <div class="testi_track" #testiTrack>
+        <div class="testi_item" *ngFor="let t of testimonials">
+          <div class="testimonial_item">
+
+            <div class="rating">
+              <div class="stars">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill" style="opacity:.35"></i>
+              </div>
+              <span class="rate_num">{{ t.rating }}</span>
+            </div>
+
+            <p class="review_text">{{ t.text }}</p>
+
+            <div class="testimonial_footer">
+              <div class="img">
+                <img [src]="t.img" [alt]="t.name" />
+              </div>
+              <div class="text">
+                <h3>{{ t.name }}</h3>
+                <p>{{ t.role }}</p>
+              </div>
+
+              <div class="quote">
+                <i class="bi bi-quote"></i>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <button class="nav_circle next" type="button" (click)="testiNext()">
+        <i class="bi bi-arrow-right"></i>
+      </button>
+
+    </div>
+
+    <!-- Dots -->
+   <div class="testi_dots">
+  <button
+    type="button"
+    class="dot"
+    *ngFor="let _ of pagesArray; let i = index"
+    [class.active]="i === testiPage"
+    (click)="goToTestiPage(i)"
+  ></button>
+</div>
+
+
+  </div>
+</section>
+
+
+<section class="blog_grocery pt_100 pb_100">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-xl-5 m-auto text-center">
+        <div class="section_heading mb_15">
+          <h5>Our Blog Post</h5>
+          <h3>Latest News &amp; Articles</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slider -->
+    <div class="blog_wrapper">
+
+      <button class="nav_circle prev" type="button" (click)="blogPrev()">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+
+      <div class="blog_track" #blogTrack>
+        <div class="blog_item_wrap" *ngFor="let b of blogs">
+          <div class="blog_item">
+            <a [routerLink]="b.link || '/blogs-details'" class="blog_img">
+              <img [src]="b.img" [alt]="b.title" class="img-fluid w-100" />
+            </a>
+
+            <div class="blog_text">
+              <ul class="top">
+                <li><i class="bi bi-person"></i> {{ b.author }}</li>
+                <li><i class="bi bi-calendar-event"></i> {{ b.date }}</li>
+              </ul>
+
+              <a class="title" [routerLink]="b.link || '/blogs-details'">
+                {{ b.title }}
+              </a>
+
+              <p>{{ b.excerpt }}</p>
+
+              <ul class="bottom">
+                <li>
+                  <a [routerLink]="b.link || '/blogs-details'">
+                    Read More <i class="bi bi-arrow-right"></i>
+                  </a>
+                </li>
+                <li>
+                  <span><i class="bi bi-chat-dots"></i> {{ b.comments }} Comments</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="nav_circle next" type="button" (click)="blogNext()">
+        <i class="bi bi-arrow-right"></i>
+      </button>
+
+    </div>
+
+    <!-- Dots (بالصفحات) -->
+    <div class="blog_dots">
+      <button
+        type="button"
+        class="dot"
+        *ngFor="let _ of blogPages; let i = index"
+        [class.active]="i === blogPage"
+        (click)="goToBlogPage(i)"
+      ></button>
+    </div>
+
+  </div>
+</section>
+
+
+</section>
