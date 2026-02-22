@@ -1,1 +1,652 @@
-<p>home3 works!</p>
+<!-- Banner -->
+<section
+  class="beauty_banner"
+  (mouseenter)="stopBannerAuto()"
+  (mouseleave)="startBannerAuto()"
+>
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Large Banner -->
+      <div class="col-xl-11">
+        <div class="beauty_banner_slider_item">
+          <div class="row align-items-center">
+            <div class="col-lg-6">
+              <div class="beauty_banner_text">
+                <h4>{{ activeSlide.titleSmall }}</h4>
+                <h1>{{ activeSlide.title }}</h1>
+                <p>{{ activeSlide.desc }}</p>
+
+                <ul class="d-flex flex-wrap">
+                  <li *ngFor="let i of activeSlide.icons">
+                    <span>
+                      <img [src]="i.icon" alt="Icon" class="img-fluid w-100" />
+                    </span>
+                    <b>{{ i.text }}</b>
+                  </li>
+                </ul>
+
+                <a class="common_btn" [routerLink]="activeSlide.ctaLink">
+                  {{ activeSlide.ctaText }}
+                  <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                </a>
+
+                <!-- arrows -->
+                <div class="nav_arrows">
+                  <button type="button" (click)="prev()" aria-label="Prev">
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+                  <button type="button" (click)="next()" aria-label="Next">
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="beauty_banner_img">
+                <div class="img">
+                  <img
+                    [src]="activeSlide.img"
+                    alt="Beauty Banner"
+                    class="img-fluid w-100"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thumbs Right -->
+      <div class="col-xl-1 d-none d-xl-block">
+        <div class="beauty_banner_slider_small_area">
+          <div class="beauty_banner_slider_small">
+            <button
+              type="button"
+              class="beauty_banner_slider_small_item"
+              *ngFor="let s of slides; let i = index"
+              [class.active]="i === activeIndex"
+              (click)="goTo(i)"
+              aria-label="thumb"
+            >
+              <img [src]="s.thumb" alt="thumb" class="img-fluid" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products -->
+<section class="beauty_featured_products mt_100">
+  <div class="container">
+    <div class="row g-4 align-items-stretch">
+      <div class="col-lg-4">
+        <div class="beauty_featured_products_banner">
+          <img
+            src="assets/img/beauty_featured_products_banner_img.jpg"
+            alt="Beauty"
+            class="img-fluid w-100"
+          />
+          <div class="text">
+            <h6>Essential Items</h6>
+            <h2>Empower Yourself</h2>
+            <a class="common_btn" [routerLink]="'/shop-details'">
+              Shop Now <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="featured_head">
+          <div class="section_heading_beauty">
+            <h5>Best Selling Products</h5>
+            <h3>Our Best Selling Products</h3>
+          </div>
+
+          <div class="featured_actions">
+            <a class="view_all_link" [routerLink]="'/shop'">
+              View All <i class="bi bi-arrow-right"></i>
+            </a>
+
+            <div class="featured_arrows">
+              <button type="button" (click)="featuredPrev()" aria-label="Prev">
+                <i class="bi bi-chevron-left"></i>
+              </button>
+              <button type="button" (click)="featuredNext()" aria-label="Next">
+                <i class="bi bi-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="featured_viewport"
+          (mouseenter)="pauseFeaturedAuto()"
+          (mouseleave)="resumeFeaturedAuto()"
+        >
+          <div
+            #featuredTrackRef
+            class="featured_track"
+            [style.transform]="trackTransform"
+          >
+            <div
+              class="card_wrap"
+              *ngFor="let p of featuredProducts; trackBy: trackByTitle"
+            >
+              <div class="beauty_product_item">
+                <div class="img">
+                  <img [src]="p.img" [alt]="p.title" class="img-fluid w-100" />
+
+                  <ul class="discount_list" *ngIf="p.isNew || p.discountPercent">
+                    <li class="new" *ngIf="p.isNew">New</li>
+                    <li class="discount" *ngIf="p.discountPercent">
+                      <b>-</b> {{ p.discountPercent }}%
+                    </li>
+                  </ul>
+
+                  <a class="common_btn add_to_cart" href="javascript:void(0)"
+                    >Add to Cart</a
+                  >
+                </div>
+
+                <div class="text">
+                  <h3 class="price">
+                    <ng-container *ngIf="p.oldPrice; else noOld">
+                      <del>${{ p.oldPrice }}</del> ${{ p.price }}
+                    </ng-container>
+                    <ng-template #noOld>${{ p.price }}</ng-template>
+                  </h3>
+
+                  <a class="title" [routerLink]="'/shop-details'">{{
+                    p.title
+                  }}</a>
+
+                  <p class="rating">
+                    <ng-container *ngFor="let s of getStars(p.rating)">
+                      <i class="fas fa-star" *ngIf="s === 'full'"></i>
+                      <i class="fas fa-star-half-alt" *ngIf="s === 'half'"></i>
+                      <i class="far fa-star" *ngIf="s === 'empty'"></i>
+                    </ng-container>
+                    <span>{{ p.reviews }} Reviews</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /col-lg-8 -->
+    </div>
+  </div>
+</section>
+
+<!-- Category marquee -->
+<section class="beauty_category mt_100">
+  <div class="container">
+    <div
+      class="beauty_category_marquee"
+      (mouseenter)="pauseCategory = true"
+      (mouseleave)="pauseCategory = false"
+      [class.paused]="pauseCategory"
+    >
+      <div class="marquee_track">
+        <a *ngFor="let c of categories" [routerLink]="c.link" class="beauty_category_item">
+          <div class="img">
+            <img [src]="c.img" [alt]="c.title" class="img-fluid w-100" />
+          </div>
+          <h4>{{ c.title }} <span>({{ c.count }})</span></h4>
+        </a>
+
+        <!-- duplicate list for seamless loop -->
+        <a *ngFor="let c of categories" [routerLink]="c.link" class="beauty_category_item">
+          <div class="img">
+            <img [src]="c.img" [alt]="c.title" class="img-fluid w-100" />
+          </div>
+          <h4>{{ c.title }} <span>({{ c.count }})</span></h4>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Best Selling grid -->
+<section class="beauty_best_selling mt_100">
+  <div class="container">
+    <div class="section_heading_wrap mb_15">
+      <div class="section_heading_beauty">
+        <h5>Best Selling Products</h5>
+        <h3>Our Best Selling Products</h3>
+      </div>
+
+      <a class="view_all_link" [routerLink]="'/shop'">
+        View All <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-6 col-md-4 col-xl-3" *ngFor="let p of bestSelling">
+        <div class="beauty_product_item v2">
+          <div class="img">
+            <img [src]="p.img" [alt]="p.title" class="img-fluid w-100" />
+
+            <ul class="discount_list" *ngIf="p.isNew || p.discountPercent">
+              <li class="new" *ngIf="p.isNew">New</li>
+              <li class="discount" *ngIf="p.discountPercent">
+                <b>-</b> {{ p.discountPercent }}%
+              </li>
+            </ul>
+
+            <ul class="btn_list">
+              <li><a href="javascript:void(0)"><i class="bi bi-heart"></i></a></li>
+              <li><a href="javascript:void(0)"><i class="bi bi-arrow-left-right"></i></a></li>
+            </ul>
+
+            <a class="common_btn add_to_cart" href="javascript:void(0)">Add to Cart</a>
+          </div>
+
+          <div class="text">
+            <h3 class="price">
+              <ng-container *ngIf="p.oldPrice; else onlyPrice">
+                <del>${{ p.oldPrice }}</del> ${{ p.price }}
+              </ng-container>
+              <ng-template #onlyPrice>${{ p.price }}</ng-template>
+            </h3>
+
+            <a class="title" [routerLink]="'/shop-details'">{{ p.title }}</a>
+
+            <p class="rating">
+              <ng-container *ngFor="let s of getStars(p.rating)">
+                <i class="fas fa-star" *ngIf="s === 'full'"></i>
+                <i class="fas fa-star-half-alt" *ngIf="s === 'half'"></i>
+                <i class="far fa-star" *ngIf="s === 'empty'"></i>
+              </ng-container>
+              <span>{{ p.reviews }} Reviews</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ads -->
+<section class="beauty_add_area mt_70">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="beauty_add_card">
+          <img src="../assets/img/beauty_add_large_img_1.jpg" alt="add" class="img-fluid w-100" />
+          <div class="text">
+            <h4>Black Friday Offer</h4>
+            <h2>Rose Glow Body Oil Up To 70% Off</h2>
+            <a class="common_btn" [routerLink]="'/shop'">
+              Shop Now <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="beauty_add_video">
+          <iframe
+            class="bg_video"
+            src="https://www.youtube-nocookie.com/embed/VdJGeeJg6E0?autoplay=1&mute=1&controls=0&rel=0&playsinline=1&loop=1&playlist=VdJGeeJg6E0"
+            title="Skin care video"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+          ></iframe>
+
+          <div class="video_overlay"></div>
+
+          <div class="beauty_add_video_text">
+            <h2>Skin Care</h2>
+            <a [routerLink]="'/shop'">
+              Discover The Products <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="beauty_add_card right">
+          <img src="../assets/img/beauty_add_large_img_2.jpg" alt="add" class="img-fluid w-100" />
+          <div class="text">
+            <h4>Summer Collection</h4>
+            <h2>Ageless Radiance Night Cream</h2>
+            <a class="common_btn" [routerLink]="'/shop'">
+              Shop Now <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trending -->
+<section class="beauty_trending mt_70">
+  <div class="container">
+    <div class="trending_head mb_15">
+      <div class="section_heading_beauty">
+        <h5>Trending This Month</h5>
+        <h3>Trending Products</h3>
+      </div>
+
+      <div class="trending_tabs">
+        <button
+          type="button"
+          class="tab_btn"
+          *ngFor="let t of trendingTabs; let i = index"
+          [class.active]="i === activeTrendingTab"
+          (click)="setTrendingTab(i)"
+        >
+          {{ t.label }}
+        </button>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-6 col-md-4 col-xl-3" *ngFor="let p of filteredTrending">
+        <div class="beauty_product_item">
+          <div class="img">
+            <img [src]="p.img" [alt]="p.title" class="img-fluid w-100" />
+
+            <ul class="discount_list" *ngIf="p.isNew || p.discountPercent">
+              <li class="new" *ngIf="p.isNew">New</li>
+              <li class="discount" *ngIf="p.discountPercent">
+                <b>-</b> {{ p.discountPercent }}%
+              </li>
+            </ul>
+
+            <ul class="btn_list">
+              <li>
+                <a href="javascript:void(0)" aria-label="wishlist"><i class="bi bi-heart"></i></a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" aria-label="compare"><i class="bi bi-arrow-left-right"></i></a>
+              </li>
+            </ul>
+
+            <a class="common_btn add_to_cart" href="javascript:void(0)">Add to Cart</a>
+          </div>
+
+          <div class="text">
+            <h3 class="price">
+              <ng-container *ngIf="p.oldPrice; else noOld2">
+                <del>${{ p.oldPrice }}</del> ${{ p.price }}
+              </ng-container>
+              <ng-template #noOld2>${{ p.price }}</ng-template>
+            </h3>
+
+            <a class="title" [routerLink]="'/shop-details'">{{ p.title }}</a>
+
+            <p class="rating">
+              <ng-container *ngFor="let s of getStars(p.rating)">
+                <i class="bi bi-star-fill" *ngIf="s === 'full'"></i>
+                <i class="bi bi-star-half" *ngIf="s === 'half'"></i>
+                <i class="bi bi-star" *ngIf="s === 'empty'"></i>
+              </ng-container>
+              <span>{{ p.reviews }} Reviews</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="beauty_features mt_95">
+  <div class="container">
+    <div class="features_wrap">
+      <div
+        class="beauty_features_item"
+        *ngFor="let f of features; let last = last"
+        [class.no_border]="last"
+      >
+        <div class="icon">
+          <i class="bi" [ngClass]="f.icon"></i>
+        </div>
+
+        <div class="text">
+          <h3>{{ f.title }}</h3>
+          <p>{{ f.sub }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- New Arrival -->
+<section class="container mt-5">
+  <div class="row align-items-end">
+    <div class="col-xl-6 col-sm-9">
+      <div class="section_heading_beauty mb_15">
+        <h5>New Arrival</h5>
+        <h3>New Arrival Products</h3>
+      </div>
+    </div>
+
+    <div class="col-xl-6 col-sm-3">
+      <div class="view_all_btn_area">
+        <a class="view_all_link" [routerLink]="'/shop'">
+          View All <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-5">
+    <div class="col-6 col-md-4 col-xl-3" *ngFor="let p of newArrivals">
+      <div class="beauty_product_item v3">
+        <div class="img">
+          <img [src]="p.img" [alt]="p.title" class="img-fluid" />
+
+          <ul class="discount_list" *ngIf="p.isNew || p.discountPercent">
+            <li class="new" *ngIf="p.isNew">New</li>
+            <li class="discount" *ngIf="p.discountPercent">-{{ p.discountPercent }}%</li>
+          </ul>
+
+          <a class="add_to_cart" href="javascript:void(0)">Add to Cart</a>
+        </div>
+
+        <div class="text">
+          <h3 class="price">
+            <ng-container *ngIf="p.oldPrice; else onlyPrice2">
+              <del>${{ p.oldPrice }}</del> ${{ p.price }}
+            </ng-container>
+            <ng-template #onlyPrice2>${{ p.price }}</ng-template>
+          </h3>
+
+          <a class="title" [routerLink]="'/shop-details'">{{ p.title }}</a>
+
+          <p class="rating">
+            <ng-container *ngFor="let s of getStars(p.rating)">
+              <i class="fas fa-star" *ngIf="s === 'full'"></i>
+              <i class="fas fa-star-half-alt" *ngIf="s === 'half'"></i>
+              <i class="far fa-star" *ngIf="s === 'empty'"></i>
+            </ng-container>
+            <span>{{ p.reviews }} Reviews</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Countdown -->
+<section class="beauty_countdown mt_70">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-5">
+        <div class="beauty_countdown_banner">
+          <img [src]="banner.img" alt="add banner" class="img-fluid w-100" />
+
+          <div class="text">
+            <h4>{{ banner.subtitle }}</h4>
+            <h2>{{ banner.title }}</h2>
+
+            <a class="common_btn" [routerLink]="banner.ctaLink">
+              {{ banner.ctaText }}
+              <i class="bi bi-arrow-right" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8 col-md-7">
+        <div class="beauty_countdown_area" [style.backgroundImage]="'url(' + deal.bg + ')'">
+          <div class="text">
+            <h5>{{ deal.tag }}</h5>
+            <h2>{{ deal.title }}</h2>
+            <p>{{ deal.desc }}</p>
+
+            <div class="countdown_boxes">
+              <div class="box"><b>{{ days }}</b><span>Days</span></div>
+              <div class="box"><b>{{ pad(hours) }}</b><span>Hours</span></div>
+              <div class="box"><b>{{ pad(minutes) }}</b><span>Minutes</span></div>
+              <div class="box"><b>{{ pad(seconds) }}</b><span>Seconds</span></div>
+            </div>
+
+            <a class="common_btn" [routerLink]="deal.ctaLink">
+              {{ deal.ctaText }}
+              <i class="bi bi-arrow-right" aria-hidden="true"></i>
+            </a>
+          </div>
+
+          <div class="deal_img">
+            <img [src]="deal.productImg" alt="deal product" class="img-fluid" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Popular -->
+<section class="beauty_popular mt_70">
+  <div class="container">
+    <div class="section_heading_wrap beauty_head mb_15">
+      <div class="section_heading_beauty">
+        <h5>Popular Products</h5>
+        <h3>Our Popular Products</h3>
+      </div>
+
+      <a class="view_all_link" [routerLink]="'/shop'">
+        View All <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-6 col-md-4 col-xl-3" *ngFor="let p of popularProducts; trackBy: trackByTitle">
+        <div class="beauty_product_item v3">
+          <div class="img">
+            <img [src]="p.img" [alt]="p.title" class="img-fluid" />
+
+            <ul class="discount_list" *ngIf="p.isNew || p.discountPercent">
+              <li class="new" *ngIf="p.isNew">New</li>
+              <li class="discount" *ngIf="p.discountPercent">-{{ p.discountPercent }}%</li>
+            </ul>
+
+            <a class="add_to_cart" href="javascript:void(0)">Add to Cart</a>
+          </div>
+
+          <div class="text">
+            <h3 class="price">
+              <ng-container *ngIf="p.oldPrice; else onlyPrice3">
+                <del>${{ p.oldPrice }}</del> ${{ p.price }}
+              </ng-container>
+              <ng-template #onlyPrice3>${{ p.price }}</ng-template>
+            </h3>
+
+            <a class="title" [routerLink]="'/shop-details'">{{ p.title }}</a>
+
+            <p class="rating">
+              <ng-container *ngFor="let s of getStars(p.rating)">
+                <i class="fas fa-star" *ngIf="s === 'full'"></i>
+                <i class="fas fa-star-half-alt" *ngIf="s === 'half'"></i>
+                <i class="far fa-star" *ngIf="s === 'empty'"></i>
+              </ng-container>
+              <span>{{ p.reviews }} Reviews</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Brand -->
+<section class="beauty_brand mt_95">
+  <div class="container">
+    <div class="brand_wrap">
+      <button class="brand_arrow prev" type="button" (click)="brandPrev()" aria-label="Prev">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <div class="brand_viewport" (mouseenter)="pauseBrandAuto()" (mouseleave)="resumeBrandAuto()">
+        <div #brandTrackRef class="brand_track" [style.transform]="brandTransform">
+          <a
+            class="brand_item"
+            *ngFor="let b of brands; trackBy: trackByImg"
+            [routerLink]="b.link || linkDefault"
+            aria-label="brand"
+          >
+            <img [src]="b.img" [alt]="b.alt || 'Brand'" />
+          </a>
+        </div>
+      </div>
+
+      <button class="brand_arrow next" type="button" (click)="brandNext()" aria-label="Next">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Instagram marquee (FIXED) -->
+<section class="beauty_instagran_photo mt_100">
+  <div
+    class="insta_marquee"
+    [class.paused]="instaPauseOnHover && instaPaused"
+    [style.--dur]="instaDuration + 's'"
+    (mouseenter)="instaPaused = true"
+    (mouseleave)="instaPaused = false"
+  >
+    <div class="insta_track">
+      <!-- list #1 -->
+      <a
+        class="insta_item"
+        *ngFor="let it of instaItems"
+        [href]="it.link || 'javascript:void(0)'"
+        aria-label="instagram"
+      >
+        <img [src]="it.img" [alt]="it.alt || 'instagram'" />
+
+        <div class="overlay" *ngIf="it.showOverlay">
+          <h4>Follow Us on</h4>
+          <img class="ig" src="assets/images/instagram_icon.svg" alt="instagram" />
+          <p>Beauty &amp; Fashion</p>
+        </div>
+      </a>
+
+      <!-- list #2 (duplicate for seamless loop) -->
+      <a
+        class="insta_item"
+        *ngFor="let it of instaItems"
+        [href]="it.link || 'javascript:void(0)'"
+        aria-label="instagram"
+      >
+        <img [src]="it.img" [alt]="it.alt || 'instagram'" />
+
+        <div class="overlay" *ngIf="it.showOverlay">
+          <h4>Follow Us on</h4>
+          <img class="ig" src="assets/images/instagram_icon.svg" alt="instagram" />
+          <p>Beauty &amp; Fashion</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
