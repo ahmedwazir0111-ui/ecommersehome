@@ -1,1 +1,474 @@
-<p>home4 works!</p>
+<section class="gadget_banner">
+  <div class="container">
+    <div
+      class="banner_card"
+      [ngStyle]="{
+        'background-image': 'url(' + slides[currentIndex].imageUrl + ')'
+      }"
+    >
+      <div class="gadget_banner_text">
+        <h5>{{ slides[currentIndex].badge }}</h5>
+
+        <h1>{{ slides[currentIndex].title }}</h1>
+
+        <p>
+          {{ slides[currentIndex].offerText }}
+          <span>{{ slides[currentIndex].offerValue }}</span>
+          {{ slides[currentIndex].offerSuffix }}
+        </p>
+
+        <a class="common_btn" [routerLink]="slides[currentIndex].ctaLink">
+          {{ slides[currentIndex].ctaText }}
+          <i class="fas fa-long-arrow-right" aria-hidden="true"></i>
+        </a>
+
+        <!-- dots decoration -->
+     <div class="slider_dots">
+  <span
+    *ngFor="let slide of slides; let i = index"
+    [class.active]="i === currentIndex"
+    (click)="currentIndex = i"
+  ></span>
+</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="gadget_feature_product mt_55">
+  <div class="container">
+    <div class="row g-4">
+      <div
+        class="col-xl-4 col-md-6"
+        *ngFor="let item of featureProducts"
+      >
+        <div
+          class="gadget_feature_product_item"
+          [ngStyle]="{
+            'background-image': 'url(' + item.image + ')'
+          }"
+        >
+          <div class="overlay"></div>
+
+          <div class="text">
+            <h3>{{ item.title }}</h3>
+            <p class="price">{{ item.price }}</p>
+
+            <a class="buy_btn" [routerLink]="item.link">
+              Shop Now <i class="bi bi-arrow-up-right"></i>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features mt_55">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-xl-3 col-md-6" *ngFor="let f of features">
+        <div class="features_item" [ngClass]="f.theme">
+          
+          <div class="icon">
+            <i class="bi" [ngClass]="f.icon"></i>
+          </div>
+
+          <div class="text">
+            <h3>{{ f.title }}</h3>
+            <p>{{ f.desc }}</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gadget_trending_product mt_80 pt_80 pb_80">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- LEFT BANNER -->
+      <div class="col-xl-3 col-lg-4">
+        <div class="gadget_trending_product_banner">
+          <div class="img">
+            <img [src]="trendingBanner.image" alt="Product" class="img-fluid w-100" />
+            <span class="off_badge">{{ trendingBanner.offText }}</span>
+            <p class="limited">{{ trendingBanner.note }}</p>
+          </div>
+
+          <div class="text">
+            <span class="category">{{ trendingBanner.category }}</span>
+
+            <a class="title" [routerLink]="trendingBanner.link">
+              {{ trendingBanner.title }}
+            </a>
+
+            <p class="price">
+              ${{ trendingBanner.price.toFixed(2) }}
+              <del *ngIf="trendingBanner.oldPrice">${{ trendingBanner.oldPrice.toFixed(2) }}</del>
+            </p>
+
+            <p class="rating">
+              <ng-container *ngFor="let _ of [].constructor(getFullStars(trendingBanner.rating)); let i=index">
+                <i class="bi bi-star-fill"></i>
+              </ng-container>
+
+              <i class="bi bi-star-half" *ngIf="hasHalfStar(trendingBanner.rating)"></i>
+
+              <ng-container *ngFor="let _ of [].constructor(getEmptyStars(trendingBanner.rating)); let i=index">
+                <i class="bi bi-star"></i>
+              </ng-container>
+
+              <span>{{ trendingBanner.reviewsText }}</span>
+            </p>
+
+            <ul class="stock">
+              <li>available: <span>{{ trendingBanner.available }}</span></li>
+              <li>Already Sold: <span>{{ trendingBanner.sold }}</span></li>
+            </ul>
+
+            <!-- Progress -->
+            <div class="barfiller">
+              <span class="fill" [style.width.%]="trendingBanner.progressPercent"></span>
+            </div>
+
+            <!-- Countdown -->
+            <div class="countdown">
+              <div class="box">
+                <span class="num">{{ countdown.days }}</span>
+                <span class="lbl">days</span>
+              </div>
+              <div class="box">
+                <span class="num">{{ countdown.hours }}</span>
+                <span class="lbl">hours</span>
+              </div>
+              <div class="box">
+                <span class="num">{{ countdown.minutes }}</span>
+                <span class="lbl">minutes</span>
+              </div>
+              <div class="box">
+                <span class="num">{{ countdown.seconds }}</span>
+                <span class="lbl">seconds</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT TABS + GRID -->
+      <div class="col-xl-9 col-lg-8">
+
+        <div class="tabs_head">
+          <button
+            class="tab_btn"
+            *ngFor="let t of tabs"
+            [class.active]="activeTab === t.id"
+            (click)="setTab(t.id)"
+            type="button"
+          >
+            {{ t.label }}
+          </button>
+        </div>
+
+        <ul class="gadget_trending_item_grid">
+          <li class="gadget_product_item" *ngFor="let p of tabProducts[activeTab]">
+            <div class="top_text">
+              <a class="title" [routerLink]="'/shop-details'">{{ p.title }}</a>
+            </div>
+
+            <div class="img">
+              <img [src]="p.img" alt="Product" class="img-fluid w-100" />
+
+              <ul class="btn_list">
+                <li><a href="javascript:void(0)"><i class="bi bi-arrow-left-right"></i></a></li>
+                <li><a href="javascript:void(0)"><i class="bi bi-heart"></i></a></li>
+              </ul>
+            </div>
+
+            <div class="bottom_text">
+              <p class="rating">
+                <ng-container *ngFor="let _ of [].constructor(getFullStars(p.rating)); let i=index">
+                  <i class="bi bi-star-fill"></i>
+                </ng-container>
+                <i class="bi bi-star-half" *ngIf="hasHalfStar(p.rating)"></i>
+                <ng-container *ngFor="let _ of [].constructor(getEmptyStars(p.rating)); let i=index">
+                  <i class="bi bi-star"></i>
+                </ng-container>
+                <span>({{ p.reviews }} reviews)</span>
+              </p>
+
+              <p class="price">
+                ${{ p.price.toFixed(2) }}
+                <del *ngIf="p.oldPrice">${{ p.oldPrice.toFixed(2) }}</del>
+              </p>
+
+              <a class="gadget_cart_btn" href="javascript:void(0)">
+           <i class="bi bi-cart-fill"></i>
+              </a>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gadget_large_banner mt_80">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <a
+          class="gadget_large_banner_bg"
+          [routerLink]="largeBanner.link"
+          [ngStyle]="{ 'background-image': 'url(' + largeBanner.bg + ')' }"
+        >
+          <div class="text">
+            <p>{{ largeBanner.tag }}</p>
+            <h3>{{ largeBanner.title }}</h3>
+            <span>{{ largeBanner.discount }}</span>
+          </div>
+
+          <div class="img">
+            <img [src]="largeBanner.img" alt="Banner" />
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+<div class="row">
+  <div class="col-12 mt-5  mb-5">
+    <div class="section_heading mb_15">
+      <h3>{{ newArrivalsHeading.title }}</h3>
+
+      <a class="common_btn" [routerLink]="newArrivalsHeading.link">
+        {{ newArrivalsHeading.btnText }}
+        <i class="bi bi-arrow-up-right"></i>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="row g-4">
+  <div class="col-xl-3 col-md-4 col-6" *ngFor="let p of newArrivals">
+    <div class="gadget_product_item">
+
+      <div class="top_text">
+        <a class="title" [routerLink]="p.link">{{ p.title }}</a>
+      </div>
+
+      <div class="img">
+        <img [src]="p.img" alt="Product" class="img-fluid w-100" />
+
+        <ul class="btn_list">
+          <li>
+            <a href="javascript:void(0)" aria-label="Compare">
+              <i class="bi bi-arrow-left-right"></i>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" aria-label="Wishlist">
+              <i class="bi bi-heart"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bottom_text">
+        <p class="rating">
+          <ng-container *ngFor="let _ of [].constructor(getFullStars(p.rating))">
+            <i class="bi bi-star-fill"></i>
+          </ng-container>
+
+          <i class="bi bi-star-half" *ngIf="hasHalfStar(p.rating)"></i>
+
+          <ng-container *ngFor="let _ of [].constructor(getEmptyStars(p.rating))">
+            <i class="bi bi-star"></i>
+          </ng-container>
+
+          <span>({{ p.reviews }} Reviews)</span>
+        </p>
+
+        <p class="price">
+          ${{ p.price.toFixed(2) }}
+          <del *ngIf="p.oldPrice">${{ p.oldPrice.toFixed(2) }}</del>
+        </p>
+
+        <a class="gadget_cart_btn" href="javascript:void(0)" aria-label="Add to cart">
+   <i class="bi bi-cart-fill"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="beauty_brand mt_80">
+  <div class="container">
+    <div class="brand_slider_wrap">
+
+      <button class="brand_arrow prev" type="button" (click)="scrollBrands('prev')">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <div class="brand_track" #brandTrack>
+        <a
+          class="brand_item"
+          *ngFor="let b of brands"
+          [routerLink]="b.link"
+        >
+          <img [src]="b.img" alt="Brand" />
+        </a>
+      </div>
+
+      <button class="brand_arrow next" type="button" (click)="scrollBrands('next')">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<section class="multi_product mt_50">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-xl-3 col-md-6" *ngFor="let col of multiProductColumns">
+
+        <h3 class="multi_title">{{ col.title }}</h3>
+
+        <div class="multi_product_item" *ngFor="let p of col.items">
+          <div class="img">
+            <img [src]="p.img" alt="Product" />
+          </div>
+
+          <div class="text">
+            <a class="title" [routerLink]="p.link">{{ p.title }}</a>
+
+            <p class="rating">
+              <ng-container *ngFor="let _ of [].constructor(getFullStars(p.rating))">
+                <i class="bi bi-star-fill"></i>
+              </ng-container>
+
+              <i class="bi bi-star-half" *ngIf="hasHalfStar(p.rating)"></i>
+
+              <ng-container *ngFor="let _ of [].constructor(getEmptyStars(p.rating))">
+                <i class="bi bi-star"></i>
+              </ng-container>
+
+              <span>({{ p.reviews }} Reviews)</span>
+            </p>
+
+            <p class="price">
+              ${{ p.price.toFixed(2) }}
+              <del *ngIf="p.oldPrice">${{ p.oldPrice.toFixed(2) }}</del>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<section class="add_banner pt_55">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-6" *ngFor="let b of adBanners">
+        <div
+          class="add_banner_item"
+          [ngStyle]="{ 'background-image': 'url(' + b.bg + ')' }"
+        >
+          <div class="add_banner_item_text">
+            <h4>{{ b.tag }}</h4>
+            <h2>{{ b.title }}</h2>
+
+            <a class="common_btn" [ngClass]="b.btnClass" [routerLink]="b.link">
+              Shop Now <i class="bi bi-arrow-up-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container mt-5 mb-5">
+
+  <!-- heading -->
+  <div class="row">
+    <div class="col-12">
+      <div class="section_heading mb_15">
+        <h3>{{ bestSellingHeading.title }}</h3>
+
+        <a class="common_btn" [routerLink]="bestSellingHeading.link">
+          {{ bestSellingHeading.btnText }}
+          <i class="bi bi-arrow-up-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- products grid -->
+  <div class="row g-4">
+    <div class="col-xl-3 col-md-4 col-6" *ngFor="let p of bestSellingProducts">
+      <div class="gadget_product_item">
+
+        <div class="top_text">
+          <a class="title" [routerLink]="p.link">{{ p.title }}</a>
+        </div>
+
+        <div class="img">
+          <img [src]="p.img" alt="Product" class="img-fluid w-100" />
+
+          <!-- hover icons -->
+          <ul class="btn_list">
+            <li>
+              <a href="javascript:void(0)" aria-label="Compare">
+                <i class="bi bi-arrow-left-right"></i>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" aria-label="Wishlist">
+                <i class="bi bi-heart"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bottom_text">
+          <p class="rating">
+            <ng-container *ngFor="let _ of [].constructor(getFullStars(p.rating))">
+              <i class="bi bi-star-fill"></i>
+            </ng-container>
+
+            <i class="bi bi-star-half" *ngIf="hasHalfStar(p.rating)"></i>
+
+            <ng-container *ngFor="let _ of [].constructor(getEmptyStars(p.rating))">
+              <i class="bi bi-star"></i>
+            </ng-container>
+
+            <span>({{ p.reviews }} Reviews)</span>
+          </p>
+
+          <p class="price">
+            ${{ p.price.toFixed(2) }}
+            <del *ngIf="p.oldPrice">${{ p.oldPrice.toFixed(2) }}</del>
+          </p>
+
+          <!-- cart icon (العربية) -->
+          <a class="gadget_cart_btn" href="javascript:void(0)" aria-label="Add to cart">
+            <i class="bi bi-cart-fill"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>
