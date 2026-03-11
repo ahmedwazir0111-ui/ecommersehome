@@ -32,20 +32,14 @@
               }
             ],
 
-           "styles": [
-  "src/styles.scss",
-  "node_modules/swiper/swiper-bundle.min.css",
-   "node_modules/bootstrap/dist/css/bootstrap.min.css",
-  "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-  "node_modules/bootstrap-icons/font/bootstrap-icons.css",
-  "node_modules/slick-carousel/slick/slick.css",
-  "node_modules/slick-carousel/slick/slick-theme.css"
-],
-"scripts": [
-  "node_modules/jquery/dist/jquery.min.js",
-  "node_modules/slick-carousel/slick/slick.min.js"
-]
-,
+            "styles": [
+              "src/styles.scss",
+              "node_modules/swiper/swiper-bundle.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css"
+            ],
+            "scripts": [],
 
             "server": "src/main.server.ts",
             "outputMode": "server",
@@ -60,13 +54,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "10MB",
-                  "maximumError": "10MB"
+                  "maximumWarning": "8MB",
+                  "maximumError": "8MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "10MB",
-                  "maximumError": "10MB"
+                  "maximumWarning": "8MB",
+                  "maximumError": "8MB"
                 }
               ],
               "outputHashing": "all"
@@ -103,19 +97,12 @@
             "styles": [
               "src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-
               "node_modules/swiper/swiper-bundle.min.css",
-
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
-              "node_modules/slick-carousel/slick/slick.css",
-              "node_modules/slick-carousel/slick/slick-theme.css"
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
 
-            "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/slick-carousel/slick/slick.min.js"
-            ]
+            "scripts": []
           },
 
           "configurations": {
@@ -123,13 +110,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "10MB",
-                  "maximumError": "10MB"
+                  "maximumWarning": "8MB",
+                  "maximumError": "8MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "10MB",
-                  "maximumError": "10MB"
+                  "maximumWarning": "8MB",
+                  "maximumError": "8MB"
                 }
               ],
               "outputHashing": "all"
